@@ -1,4 +1,4 @@
 packages/
 
 # ignore all .dll files
-*.dll
+KBAudioPlayer/*.dll

@@ -21,10 +21,13 @@ using CSCore;
 using CSCore.SoundOut;
 using CSCore.Codecs;
 using Deveck.Ui.Controls.Scrollbar;
+using Newtonsoft.Json;
+
+
 
 namespace KBAudioPlayer
 {
-
+    
     public partial class Form1 : Form
     {
 
@@ -79,6 +82,7 @@ namespace KBAudioPlayer
         //
         ListView newlstSongs;
 
+        
         public Form1()
         {
             InitializeComponent();
@@ -104,7 +108,7 @@ namespace KBAudioPlayer
 
             lstSongs.MouseDoubleClick += new MouseEventHandler(lstSongs_MouseDoubleClick);
             lstSongs.MouseClick += new MouseEventHandler(lstSongs_MouseClick);
-
+            //lstSongs.MouseEnter += new System.EventHandler(lstSongs_MouseEnter);
             lstSongs.DragDrop += new System.Windows.Forms.DragEventHandler(lstSongs_DragDrop);
             lstSongs.DragEnter += new System.Windows.Forms.DragEventHandler(lstSongs_DragEnter);
             lstSongs.ItemDrag += new System.Windows.Forms.ItemDragEventHandler(lstSongs_ItemDrag);
@@ -167,6 +171,11 @@ namespace KBAudioPlayer
             HideHorizontalScrollBar();
 
 
+        }
+
+        private void lstSongs_MouseEnter(object sender, MouseEventArgs e)
+        {
+            this.Cursor = Cursors.Default;
         }
 
         [System.Runtime.InteropServices.DllImport("user32", CallingConvention = System.Runtime.InteropServices.CallingConvention.Winapi)]
@@ -290,7 +299,7 @@ namespace KBAudioPlayer
                 label1.Text = current;
                 //
                 int index = lstSongs.SelectedIndices[0];
-                if (index > 0)
+                if (index >= 0)
                 {
                     waveOut.Stop();
                     PlayAudio(playlist[index]);
@@ -312,7 +321,7 @@ namespace KBAudioPlayer
         private int getIndexFromSelect(string current)
         {
             // add escape character for regular match
-            for (int i = 0; i < playlist.Count; i++)
+            for (int i = 0; i <= playlist.Count-1; i++)
             {
                 string name = playlist[i];
                 name = Path.GetFileName(name);
@@ -467,7 +476,7 @@ namespace KBAudioPlayer
                         //
                         if (tabControl1.SelectedIndex == 1)
                         {
-                            if (index < playlist2.Count - 1)
+                            if (index <= playlist2.Count - 1)
                             {
                                 newlstSongs.Items[index].Selected = false;
                                 newlstSongs.Items[index + 1].Selected = true;
@@ -490,8 +499,9 @@ namespace KBAudioPlayer
                         }
                         else
                         {
-                            if (index < playlist.Count - 1)
+                            if (index <= playlist.Count - 1 && index>=0)
                             {
+                                //Debug.WriteLine(index);
                                 lstSongs.Items[index].Selected = false;
                                 lstSongs.Items[index + 1].Selected = true;
                                 waveOut.Stop();
@@ -535,7 +545,20 @@ namespace KBAudioPlayer
               
                 if (isPaused == true)
                 {
-                    waveOut.Play();
+                    //waveOut.Play();
+					playTime.Start();
+                        reader = new AudioFileReader(name);
+                        equalizer = new Equalizer(reader, bands);
+                        //
+                        equalizerForm.setEqualizer(bands, equalizer, waveOut);
+
+                        waveOut.Stop();
+                        waveOut.Init(equalizer);
+                        waveOut.Play();
+                        //
+                        label1.Text = result;
+                        duration = reader.TotalTime;
+                        label3.Text = duration.ToString(@"mm\:ss");
                     isPlay = true;
                 }
                 else
@@ -550,6 +573,7 @@ namespace KBAudioPlayer
                         //
                         equalizerForm.setEqualizer(bands, equalizer, waveOut);
 
+                        waveOut.Stop();
                         waveOut.Init(equalizer);
                         waveOut.Play();
                         //
@@ -568,8 +592,7 @@ namespace KBAudioPlayer
                         soundOut.Volume = (float)volumeSlider.Value / 100f;
                         soundOut.Play();
                         TimeSpan totalTime = soundSource.GetLength();
-                        //Debug.WriteLine(totalTime.ToString(@"mm\:ss"));
-
+                        
                         label1.Text = result.Replace(".flac", "");
                         duration =  soundSource.GetLength();
                         label3.Text = duration.ToString(@"mm\:ss");
@@ -624,9 +647,21 @@ namespace KBAudioPlayer
             file.Close();
             //
             UpdatePlaylist();
-            
+
+            string filePath = "pref.json";
+
+            // JSON 파일 읽기
+            string jsonData = File.ReadAllText(filePath);
+
+            // JSON 데이터 파싱
+            Person person = JsonConvert.DeserializeObject<Person>(jsonData);
+
+            Debug.WriteLine(person.Volume);
+            volumeSlider.Value = person.Volume;
+            /*
             using (XmlReader rd = XmlReader.Create(path + @"\pref.xml"))
             {
+                //Debug.WriteLine(path);
                 while (rd.Read())
                 {
                     if (rd.IsStartElement())
@@ -634,6 +669,7 @@ namespace KBAudioPlayer
                         if (rd.Name == "Volume")
                         {
                             float tmp = float.Parse(rd.ReadString(), CultureInfo.InvariantCulture.NumberFormat);
+                            Debug.WriteLine(tmp);
                             volumeSlider.Value = (int)(tmp* 100f);
                         }
 
@@ -647,7 +683,7 @@ namespace KBAudioPlayer
                     }
                 }
             }
-
+            */
 
         }
         private void setVolume(int volume)
@@ -733,7 +769,7 @@ namespace KBAudioPlayer
             playlist.RemoveAt(index);
             playlist.Add(tmp);
             UpdatePlaylist();
-            lstSongs.Items[playlist.Count].Selected = true;
+            lstSongs.Items[playlist.Count-1].Selected = true;
 
 
         }
@@ -879,7 +915,7 @@ namespace KBAudioPlayer
                 current = current.Replace(fi2.Extension, "");
             }
 
-            for (int i = 0; i < playlist.Count; i++)
+            for (int i = 0; i <= playlist.Count-1; i++)
             {
                 string name = playlist[i];
                 name = Path.GetFileName(name);
@@ -1068,6 +1104,7 @@ namespace KBAudioPlayer
 
         private void Form1_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
+            //MessageBox.Show("close");
             // stop the player
             playerClose();
 
@@ -1082,7 +1119,14 @@ namespace KBAudioPlayer
             if (reader != null) playTime.Stop();
             if (_playback != null)
             {
-                if (_playback.IsPlaying()) _playback.Stop();
+                if (_playback.IsPlaying())
+                {
+                    _playback.Stop();
+                    //MessageBox.Show("close");
+                    waveOut.Stop();
+                    waveOut.Dispose();
+                }
+
             }
             // clear file before writing
             File.WriteAllText(path + @"\playlist.dat", string.Empty);
@@ -1097,13 +1141,38 @@ namespace KBAudioPlayer
                 }
 
             }
+            waveOut.Stop();
+            waveOut.Dispose();
             writer.Dispose();
             writer.Close();
             WriteXML();
+            WriteJson();
             Application.Exit();
+            
+            timer1.Stop();
+
+
         }
 
-        
+        void WriteJson()
+        {
+            // JSON 파일 경로
+            string filePath = "pref.json";
+
+            // Person 객체 생성
+            Person person = new Person
+            {
+                Name = "John",
+                Volume = (int)(volumeSlider.Value),
+                City = "New York"
+            };
+
+            // 객체를 JSON 형식으로 직렬화
+            string jsonData = JsonConvert.SerializeObject(person, Newtonsoft.Json.Formatting.Indented);
+
+            // JSON 데이터 파일에 쓰기
+            File.WriteAllText(filePath, jsonData);
+        }
         void volumeSlider_MouseWheel(object sender, MouseEventArgs e)
         {
             ((HandledMouseEventArgs)e).Handled = true;//disable default mouse wheel
@@ -1131,6 +1200,14 @@ namespace KBAudioPlayer
             }
         }
 
+        public class Person
+        {
+            public string Name { get; set; }
+            public int Volume { get; set; }
+            public string City { get; set; }
+        }
+
+
         public class Employee   // public 이어야 함
         {
             public int Seq;
@@ -1152,7 +1229,7 @@ namespace KBAudioPlayer
             int index = getPlayIndex(current);
             if (index < 0) index = currentNum;
 
-            if (index < playlist.Count - 1)
+            if (index <= playlist.Count - 1)
             {
                 lstSongs.Items[index].Selected = false;
                 lstSongs.Items[index + 1].Selected = true;
@@ -1195,14 +1272,11 @@ namespace KBAudioPlayer
             var item = lstSongs.SelectedItems[0];
             Console.WriteLine(item);
             current = item.SubItems[1].Text;
-            //Console.WriteLine(current);
             int index = getIndexFromSelect(current);
-            Console.WriteLine(index);
-            //lstSongs.Items[index].Remove();
-
+            //Console.WriteLine(index);
+            
             if (index > -1)
             {
-                //lstSongs.Items[index].Remove();
                 playlist.RemoveAt(index);
             }
             //
@@ -1396,19 +1470,10 @@ namespace KBAudioPlayer
                             equalizerForm.Show();
                         };
                         MenuItem m3 = new MenuItem("삭제");
-                        m3.Checked = isTitle;
+                        //m3.Checked = isTitle;
 
                         m3.Click += (senders, es) => {
-                            if (m3.Checked == true)
-                            {
-                                this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
-                                isTitle = false;
-                            }
-                            else
-                            {
-                                this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Sizable;
-                                isTitle = true;
-                            }
+                            
                         };
 
                         MenuItem m2 = new MenuItem("탭추가");
@@ -1417,15 +1482,43 @@ namespace KBAudioPlayer
                         m2.Click += (senders, es) => {
                             //equalizerForm.Show();
                         };
-                        
-                        MenuItem m4 = new MenuItem("닫기(C)");
-                        m4.Click += (senders, es) => {
+
+                        MenuItem m5 = new MenuItem("플레이리스트 내보내기");
+                        m5.Click += (senders, es) => {
+                            //equalizerForm.Show();
+                            // Create an instance of SaveFileDialog
+                            SaveFileDialog saveFileDialog = new SaveFileDialog();
+
+                            // Set filter options and filter index
+                            saveFileDialog.Filter = "Text Files (.txt)|*.txt|All Files (*.*)|*.*";
+                            saveFileDialog.FilterIndex = 1;
+
+                            // Call the ShowDialog method to show the dialog box
+                            DialogResult result = saveFileDialog.ShowDialog();
+
+                            // Process input if the user clicked OK
+                            if (result == DialogResult.OK)
+                            {
+                                // Get the selected file name
+                                string filePath = saveFileDialog.FileName;
+
+                                // Write text to the file
+                                File.WriteAllText(filePath, "Hello, world!");
+
+                                Console.WriteLine("File saved: " + filePath);
+                            }
+
+                        };
+
+                        MenuItem m_close = new MenuItem("닫기(C)");
+                        m_close.Click += (senders, es) => {
                             playerClose();
                         };
                         m.MenuItems.Add(m1);
                         m.MenuItems.Add(m2);
                         m.MenuItems.Add(m3);
-                        m.MenuItems.Add(m4);
+                        m.MenuItems.Add(m5);
+                        m.MenuItems.Add(m_close);
                         m.Show(this, new Point(e.X, e.Y+150));
                         //places the menu at the pointer position
                     }

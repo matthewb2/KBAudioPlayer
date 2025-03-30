@@ -217,7 +217,7 @@
             this.btnDelete.FlatAppearance.BorderSize = 0;
             this.btnDelete.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnDelete.Image = ((System.Drawing.Image)(resources.GetObject("btnDelete.Image")));
-            this.btnDelete.Location = new System.Drawing.Point(148, 389);
+            this.btnDelete.Location = new System.Drawing.Point(148, 409);
             this.btnDelete.Name = "btnDelete";
             this.btnDelete.Size = new System.Drawing.Size(30, 23);
             this.btnDelete.TabIndex = 16;
@@ -254,7 +254,7 @@
             this.button3.FlatAppearance.BorderSize = 0;
             this.button3.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button3.Image = global::KBAudioPlayer.Properties.Resources.text_plus_icon;
-            this.button3.Location = new System.Drawing.Point(240, 387);
+            this.button3.Location = new System.Drawing.Point(242, 409);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(30, 23);
             this.button3.TabIndex = 7;
@@ -290,7 +290,7 @@
             this.btnToBottom.FlatAppearance.BorderSize = 0;
             this.btnToBottom.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnToBottom.Image = global::KBAudioPlayer.Properties.Resources.arrow_stop_270_icon;
-            this.btnToBottom.Location = new System.Drawing.Point(112, 389);
+            this.btnToBottom.Location = new System.Drawing.Point(112, 409);
             this.btnToBottom.Name = "btnToBottom";
             this.btnToBottom.Size = new System.Drawing.Size(30, 23);
             this.btnToBottom.TabIndex = 4;
@@ -302,7 +302,7 @@
             this.btnDown.FlatAppearance.BorderSize = 0;
             this.btnDown.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnDown.Image = global::KBAudioPlayer.Properties.Resources.arrow_skip_270_icon;
-            this.btnDown.Location = new System.Drawing.Point(76, 389);
+            this.btnDown.Location = new System.Drawing.Point(76, 409);
             this.btnDown.Name = "btnDown";
             this.btnDown.Size = new System.Drawing.Size(30, 23);
             this.btnDown.TabIndex = 3;
@@ -314,7 +314,7 @@
             this.btnUp.FlatAppearance.BorderSize = 0;
             this.btnUp.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnUp.Image = global::KBAudioPlayer.Properties.Resources.arrow_skip_090_icon;
-            this.btnUp.Location = new System.Drawing.Point(40, 389);
+            this.btnUp.Location = new System.Drawing.Point(40, 409);
             this.btnUp.Name = "btnUp";
             this.btnUp.Size = new System.Drawing.Size(30, 23);
             this.btnUp.TabIndex = 2;
@@ -326,7 +326,7 @@
             this.btnToTop.FlatAppearance.BorderSize = 0;
             this.btnToTop.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnToTop.Image = global::KBAudioPlayer.Properties.Resources.arrow_stop_090_icon;
-            this.btnToTop.Location = new System.Drawing.Point(4, 389);
+            this.btnToTop.Location = new System.Drawing.Point(4, 409);
             this.btnToTop.Name = "btnToTop";
             this.btnToTop.Size = new System.Drawing.Size(30, 23);
             this.btnToTop.TabIndex = 1;
@@ -352,7 +352,7 @@
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(265, 213);
+            this.tabPage2.Size = new System.Drawing.Size(265, 233);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "tabPage2";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -364,7 +364,7 @@
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(265, 213);
+            this.tabPage1.Size = new System.Drawing.Size(265, 233);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "tabPage1";
             this.tabPage1.UseVisualStyleBackColor = true;
@@ -376,7 +376,7 @@
             this.lstSongs.AutoArrange = false;
             this.lstSongs.BackColor = System.Drawing.SystemColors.InactiveBorder;
             this.lstSongs.Dock = System.Windows.Forms.DockStyle.Left;
-            this.lstSongs.Font = new System.Drawing.Font("Segoe UI", 8F);
+            this.lstSongs.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F);
             this.lstSongs.ForeColor = System.Drawing.SystemColors.InactiveCaptionText;
             this.lstSongs.FullRowSelect = true;
             this.lstSongs.GridLines = true;
@@ -385,7 +385,7 @@
             this.lstSongs.Location = new System.Drawing.Point(3, 3);
             this.lstSongs.Name = "lstSongs";
             this.lstSongs.ShowItemToolTips = true;
-            this.lstSongs.Size = new System.Drawing.Size(256, 207);
+            this.lstSongs.Size = new System.Drawing.Size(256, 227);
             this.lstSongs.TabIndex = 19;
             this.lstSongs.UseCompatibleStateImageBehavior = false;
             this.lstSongs.View = System.Windows.Forms.View.Details;
@@ -412,7 +412,7 @@
             this.tabControl1.Location = new System.Drawing.Point(4, 144);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(273, 239);
+            this.tabControl1.Size = new System.Drawing.Size(273, 259);
             this.tabControl1.TabIndex = 22;
             // 
             // Form1
@@ -420,7 +420,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(284, 422);
+            this.ClientSize = new System.Drawing.Size(284, 444);
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.speakerButton);
             this.Controls.Add(this.button7);
@@ -445,8 +445,7 @@
             this.MinimumSize = new System.Drawing.Size(300, 460);
             this.Name = "Form1";
             this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
-            this.Text = "KBAudio 플레이어";
-            
+            this.Text = "KBAudio 플레이어";            
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.picSlider)).EndInit();
             this.tabPage1.ResumeLayout(false);

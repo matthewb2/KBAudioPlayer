@@ -1485,27 +1485,35 @@ namespace KBAudioPlayer
 
                         MenuItem m5 = new MenuItem("플레이리스트 내보내기");
                         m5.Click += (senders, es) => {
-                            //equalizerForm.Show();
-                            // Create an instance of SaveFileDialog
                             SaveFileDialog saveFileDialog = new SaveFileDialog();
 
-                            // Set filter options and filter index
                             saveFileDialog.Filter = "Text Files (.txt)|*.txt|All Files (*.*)|*.*";
                             saveFileDialog.FilterIndex = 1;
+                            saveFileDialog.FileName = "playlist.dat"; // 기본 파일 이름 설정
 
-                            // Call the ShowDialog method to show the dialog box
                             DialogResult result = saveFileDialog.ShowDialog();
 
                             // Process input if the user clicked OK
                             if (result == DialogResult.OK)
                             {
-                                // Get the selected file name
-                                string filePath = saveFileDialog.FileName;
+                                try
+                                {
+                                    using (StreamWriter writer = new StreamWriter(saveFileDialog.FileName))
+                                    {
 
-                                // Write text to the file
-                                File.WriteAllText(filePath, "Hello, world!");
-
-                                Console.WriteLine("File saved: " + filePath);
+                                        // 데이터 작성
+                                        foreach (string tmp in playlist)
+                                        {
+                                            writer.Write(tmp);
+                                            writer.WriteLine();
+                                        }
+                                    }
+                                    MessageBox.Show("파일로 내보내기 완료!");
+                                }
+                                catch (Exception ex)
+                                {
+                                    MessageBox.Show("오류 발생: " + ex.Message);
+                                }
                             }
 
                         };

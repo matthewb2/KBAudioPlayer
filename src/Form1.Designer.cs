@@ -40,12 +40,12 @@
             this.volumeSlider = new ColorSlider.ColorSlider();
             this.speakerButton = new System.Windows.Forms.Button();
             this.button7 = new System.Windows.Forms.Button();
-            this.button6 = new System.Windows.Forms.Button();
+            this.btnNext = new System.Windows.Forms.Button();
             this.btnDelete = new System.Windows.Forms.Button();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.picSlider = new System.Windows.Forms.PictureBox();
             this.button3 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
+            this.btnStop = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
             this.btnToBottom = new System.Windows.Forms.Button();
             this.btnDown = new System.Windows.Forms.Button();
@@ -54,9 +54,9 @@
             this.popupNotifier1 = new Tulpep.NotificationWindow.PopupNotifier();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.lstSongs = new KBAudioPlayer.ListViewWithoutScrollBar();
             this.scrollbar1 = new Deveck.Ui.Controls.Scrollbar.CustomScrollbar();
             this.tabControl1 = new System.Windows.Forms.TabControl();
+            this.lstSongs = new KBAudioPlayer.ListViewWithoutScrollBar();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.picSlider)).BeginInit();
             this.tabPage1.SuspendLayout();
@@ -200,17 +200,17 @@
             this.button7.TabIndex = 18;
             this.button7.UseVisualStyleBackColor = true;
             // 
-            // button6
+            // btnNext
             // 
-            this.button6.FlatAppearance.BorderSize = 0;
-            this.button6.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button6.Image = global::KBAudioPlayer.Properties.Resources.control_double_right_icon;
-            this.button6.Location = new System.Drawing.Point(102, 116);
-            this.button6.Name = "button6";
-            this.button6.Size = new System.Drawing.Size(18, 18);
-            this.button6.TabIndex = 17;
-            this.button6.UseVisualStyleBackColor = true;
-            this.button6.Click += new System.EventHandler(this.button6_Click);
+            this.btnNext.FlatAppearance.BorderSize = 0;
+            this.btnNext.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnNext.Image = global::KBAudioPlayer.Properties.Resources.control_double_right_icon;
+            this.btnNext.Location = new System.Drawing.Point(102, 116);
+            this.btnNext.Name = "btnNext";
+            this.btnNext.Size = new System.Drawing.Size(18, 18);
+            this.btnNext.TabIndex = 17;
+            this.btnNext.UseVisualStyleBackColor = true;
+            this.btnNext.Click += new System.EventHandler(this.btnNext_Click);
             // 
             // btnDelete
             // 
@@ -261,17 +261,17 @@
             this.button3.UseVisualStyleBackColor = true;
             this.button3.Click += new System.EventHandler(this.button3_Click);
             // 
-            // button2
+            // btnStop
             // 
-            this.button2.FlatAppearance.BorderSize = 0;
-            this.button2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button2.Image = global::KBAudioPlayer.Properties.Resources.control_stop_icon;
-            this.button2.Location = new System.Drawing.Point(70, 116);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(18, 18);
-            this.button2.TabIndex = 6;
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
+            this.btnStop.FlatAppearance.BorderSize = 0;
+            this.btnStop.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnStop.Image = global::KBAudioPlayer.Properties.Resources.control_stop_icon;
+            this.btnStop.Location = new System.Drawing.Point(70, 116);
+            this.btnStop.Name = "btnStop";
+            this.btnStop.Size = new System.Drawing.Size(18, 18);
+            this.btnStop.TabIndex = 6;
+            this.btnStop.UseVisualStyleBackColor = true;
+            this.btnStop.Click += new System.EventHandler(this.btnStop_Click);
             // 
             // button1
             // 
@@ -369,6 +369,30 @@
             this.tabPage1.Text = "tabPage1";
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
+            // scrollbar1
+            // 
+            this.scrollbar1.ActiveBackColor = System.Drawing.Color.Gray;
+            this.scrollbar1.LargeChange = 10;
+            this.scrollbar1.Location = new System.Drawing.Point(248, -12);
+            this.scrollbar1.Maximum = 99;
+            this.scrollbar1.Minimum = 0;
+            this.scrollbar1.Name = "scrollbar1";
+            this.scrollbar1.Size = new System.Drawing.Size(21, 256);
+            this.scrollbar1.SmallChange = 1;
+            this.scrollbar1.TabIndex = 0;
+            this.scrollbar1.ThumbStyle = Deveck.Ui.Controls.Scrollbar.CustomScrollbar.ThumbStyleEnum.Auto;
+            this.scrollbar1.Value = 0;
+            // 
+            // tabControl1
+            // 
+            this.tabControl1.Controls.Add(this.tabPage1);
+            this.tabControl1.Controls.Add(this.tabPage2);
+            this.tabControl1.Location = new System.Drawing.Point(4, 144);
+            this.tabControl1.Name = "tabControl1";
+            this.tabControl1.SelectedIndex = 0;
+            this.tabControl1.Size = new System.Drawing.Size(273, 259);
+            this.tabControl1.TabIndex = 22;
+            // 
             // lstSongs
             // 
             this.lstSongs.Alignment = System.Windows.Forms.ListViewAlignment.Default;
@@ -385,46 +409,23 @@
             this.lstSongs.Location = new System.Drawing.Point(3, 3);
             this.lstSongs.Name = "lstSongs";
             this.lstSongs.ShowItemToolTips = true;
-            this.lstSongs.Size = new System.Drawing.Size(256, 227);
+            this.lstSongs.Size = new System.Drawing.Size(239, 227);
             this.lstSongs.TabIndex = 19;
             this.lstSongs.UseCompatibleStateImageBehavior = false;
             this.lstSongs.View = System.Windows.Forms.View.Details;
             this.lstSongs.VScrollbar = null;
-            // 
-            // scrollbar1
-            // 
-            this.scrollbar1.ActiveBackColor = System.Drawing.Color.Gray;
-            this.scrollbar1.LargeChange = 10;
-            this.scrollbar1.Location = new System.Drawing.Point(260, 0);
-            this.scrollbar1.Maximum = 99;
-            this.scrollbar1.Minimum = 0;
-            this.scrollbar1.Name = "scrollbar1";
-            this.scrollbar1.Size = new System.Drawing.Size(16, 300);
-            this.scrollbar1.SmallChange = 1;
-            this.scrollbar1.TabIndex = 0;
-            this.scrollbar1.ThumbStyle = Deveck.Ui.Controls.Scrollbar.CustomScrollbar.ThumbStyleEnum.Auto;
-            this.scrollbar1.Value = 0;
-            // 
-            // tabControl1
-            // 
-            this.tabControl1.Controls.Add(this.tabPage1);
-            this.tabControl1.Controls.Add(this.tabPage2);
-            this.tabControl1.Location = new System.Drawing.Point(4, 144);
-            this.tabControl1.Name = "tabControl1";
-            this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(273, 259);
-            this.tabControl1.TabIndex = 22;
+            
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(284, 444);
+            this.ClientSize = new System.Drawing.Size(284, 441);
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.speakerButton);
             this.Controls.Add(this.button7);
-            this.Controls.Add(this.button6);
+            this.Controls.Add(this.btnNext);
             this.Controls.Add(this.btnDelete);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
@@ -432,7 +433,7 @@
             this.Controls.Add(this.picSlider);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.button3);
-            this.Controls.Add(this.button2);
+            this.Controls.Add(this.btnStop);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.btnToBottom);
             this.Controls.Add(this.btnDown);
@@ -445,7 +446,7 @@
             this.MinimumSize = new System.Drawing.Size(300, 460);
             this.Name = "Form1";
             this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
-            this.Text = "KBAudio 플레이어";            
+            this.Text = "KBAudio 플레이어";
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.picSlider)).EndInit();
             this.tabPage1.ResumeLayout(false);
@@ -461,7 +462,7 @@
         private System.Windows.Forms.Button btnDown;
         private System.Windows.Forms.Button btnToBottom;
         private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button btnStop;
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.OpenFileDialog openFileDialog;
@@ -473,7 +474,7 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Button btnDelete;
-        private System.Windows.Forms.Button button6;
+        private System.Windows.Forms.Button btnNext;
         private System.Windows.Forms.Button button7;
         private System.Windows.Forms.Button speakerButton;
         private ColorSlider.ColorSlider volumeSlider;

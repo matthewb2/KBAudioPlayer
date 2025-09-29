@@ -293,6 +293,8 @@ namespace KBAudioPlayer
                     label3.Text = duration.ToString(@"mm\:ss");
                     item_current = playlist[index];
                     label1.Text = Path.GetFileName(item_current);
+							
+					isPlay = true;				
 
                 }
             }
@@ -781,69 +783,29 @@ namespace KBAudioPlayer
         {
             string tmp = null;
             int index;
-
-            if (lstSongs.SelectedItems.Count > 0)
-            {
-                if (tabControl1.SelectedIndex == 1)
-                {
-                    var item = newlstSongs.SelectedItems[0];
-                    item_current = item.SubItems[1].Text;
-                    index = getIndexFromSelect(item_current);
-                    currentNum = index;
-                    tmp = Path.GetFileName(playlist2[index]);
-                    //
-                }
-                else
-                {
-                    var item = lstSongs.SelectedItems[0];
-                    item_current = item.SubItems[1].Text;
-                    index = getIndexFromSelect(item_current);
-                    currentNum = index;
-                    tmp = Path.GetFileName(playlist[index]);
-                }
-            }
-            else
-            {
-                // 아무 아이템도 선택되지 않은 상태입니다.
-                index = 0;
-                lstSongs.Items[0].Selected = true;
-            }
-
-            tmp = Path.GetFileName(playlist[index]);
-            FileInfo fi = new FileInfo(tmp);
-
+            // 일시정지 구현
             if (isPlay)
             {
                 waveOut.Pause();
+                if (reader != null)
+                    this._playback.Stop();
+                playTime.Stop();
                 isPaused = true;
                 isPlay = false;
                 button1.Image = new Bitmap(@"res\control-right-icon.png");
-                playTime.Stop();
+
 
             }
-            else
+
+            else if (isPaused)
             {
-                if (isPaused)
-                {
-                    playTime.Start();
-                    if (fi.Extension == ".mp3")
-                    {
-                        waveOut.Play();
-                    }
-                    isPaused = false;
-
-                }
-                else
-                {
-                    if (this._playback == null) this._playback = new RealTimePlayback();
-                    if (!_playback.IsPlaying()) this._playback.Start();
-
-                    PlayAudio(playlist[index]);
-                    item_current = playlist[index];
-                    label1.Text = Path.GetFileName(item_current);
-                }
+                playTime.Start();
+                waveOut.Play();
+                if (reader != null)
+                    this._playback.Start();
+                isPaused = false;
                 isPlay = true;
-                button1.Image = new Bitmap(@"res\control-pause-icon.png");
+
             }
 
         }

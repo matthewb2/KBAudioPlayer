@@ -412,6 +412,15 @@ namespace KBAudioPlayer
         {
             FillMeterData();
 
+            //플레이어가 재생 중일 때
+            // change play button icon to pause icon
+            if (isPlay)
+            {
+                button1.Image = new Bitmap(@"res\control-pause-icon.png");
+                label1.Text = Path.GetFileName(item_current);
+
+            }
+
             int index2;
             string cur;
             if (tabControl1.SelectedIndex == 1)
@@ -797,7 +806,7 @@ namespace KBAudioPlayer
 
             }
 
-            else if (isPaused)
+            else if (isPaused || item_current !=null)
             {
                 playTime.Start();
                 waveOut.Play();
@@ -845,7 +854,7 @@ namespace KBAudioPlayer
                 string ext = fi.Extension;
                 name = name.Replace(ext, "");
                 //
-                if (string.Equals(item_current, name))
+                if (item_current.Contains(name))
                     return i;
 
             }
@@ -1200,10 +1209,11 @@ namespace KBAudioPlayer
             if (lstSongs.SelectedIndices.Count > 0)
             {
                 var item = lstSongs.SelectedItems[0];
-                Console.WriteLine(item);
+                
                 item_current = item.SubItems[1].Text;
-                int index = getIndexFromSelect(item_current);
-
+                Console.WriteLine(item_current);
+                int index = getPlayIndex(item_current);
+                Console.WriteLine(index);
                 if (index > -1)
                 {
                     playlist.RemoveAt(index);

@@ -57,10 +57,6 @@ namespace KBAudioPlayer
 
                 }
             }
-            foreach (string tmp in playlist)
-            {
-                //Debug.WriteLine(tmp);
-            }
             if (reader != null) playTime.Stop();
             if (_playback != null)
             {
@@ -81,6 +77,24 @@ namespace KBAudioPlayer
             writer.Close();
             WriteXML();
 
+        }
+
+        private void SavePlayList()
+        {
+            File.WriteAllText(path + @"\playlist.dat", string.Empty);
+            FileStream fs = File.Open(path + @"\playlist.dat", FileMode.Open);
+            //write again
+            StreamWriter writer = new StreamWriter(fs, Encoding.UTF8);
+            {
+                foreach (string tmp in playlist)
+                {
+                    writer.WriteLine(tmp);
+                }
+
+            }
+            writer.Dispose();
+            writer.Close();
+            WriteXML();
         }
 
 
@@ -191,6 +205,24 @@ namespace KBAudioPlayer
 
         }
 
+        private void SetMP3Play(string name)
+        {
+
+            playTime.Start();
+            reader = new AudioFileReader(name);
+            equalizer = new Equalizer(reader, bands);
+            equalizerForm.setEqualizer(bands, equalizer, waveOut);
+            waveOut.Stop();
+            waveOut.Init(equalizer);
+            waveOut.Volume = (float)volumeSlider.Value / 100f;
+
+            waveOut.Play();
+
+
+            duration = reader.TotalTime;
+            label3.Text = duration.ToString(@"mm\:ss");
+            isPlay = true;
+        }
 
         private void PlayAudio(string name)
         {
@@ -200,19 +232,11 @@ namespace KBAudioPlayer
                 result = result.Replace(".mp3", "");
                 FileInfo fi = new FileInfo(name);
 
+
                 if (isPaused == true)
                 {
-                    playTime.Start();
-                    reader = new AudioFileReader(name);
-                    equalizer = new Equalizer(reader, bands);
-                    equalizerForm.setEqualizer(bands, equalizer, waveOut);
-                    waveOut.Stop();
-                    waveOut.Init(equalizer);
-                    waveOut.Play();
+                    SetMP3Play(name);
                     label1.Text = Path.GetFileName(result);
-                    duration = reader.TotalTime;
-                    label3.Text = duration.ToString(@"mm\:ss");
-                    isPlay = true;
                 }
                 else
                 {
@@ -220,23 +244,13 @@ namespace KBAudioPlayer
                     //
                     if (fi.Extension == ".mp3")
                     {
-                        playTime.Start();
-                        reader = new AudioFileReader(name);
-                        equalizer = new Equalizer(reader, bands);
-                        //
-                        equalizerForm.setEqualizer(bands, equalizer, waveOut);
-                        waveOut.Stop();
-                        waveOut.Init(equalizer);
-                        waveOut.Play();
-                        //
+                        SetMP3Play(name);
                         label1.Text = Path.GetFileName(result);
-                        duration = reader.TotalTime;
-                        label3.Text = duration.ToString(@"mm\:ss");
-                        isPlay = true;
 
                     }
                     else if (fi.Extension == ".flac")
                     {
+
                         playTime.Start();
                         soundSource = CodecFactory.Instance.GetCodec(name);
                         soundOut = new CSCore.SoundOut.DirectSoundOut();

@@ -619,12 +619,11 @@ namespace KBAudioPlayer
 
         // 재생 버튼 이벤트 핸들러
         private void button1_Click(object sender, EventArgs e)
-        {
-            string tmp = null;
-            int index;
+        {            
             // 일시정지 구현
             if (isPlay)
             {
+                VolumeFadeOut();
                 waveOut.Pause();
                 if (reader != null)
                     this._playback.Stop();
@@ -633,20 +632,33 @@ namespace KBAudioPlayer
                 isPlay = false;
                 button1.Image = new Bitmap(@"res\control-right-icon.png");
 
-
             }
-
             else if (isPaused || item_current !=null)
             {
                 playTime.Start();
+                waveOut.Volume = (float)(volumeSlider.Value / 100);
                 waveOut.Play();
                 if (reader != null)
                     this._playback.Start();
                 isPaused = false;
                 isPlay = true;
-
             }
 
+        }
+
+        private void VolumeFadeOut()
+        {
+            //플레이어를 종료하기 전에 볼륨을 페이드 아웃
+            //fade out volune until stop player
+            for (int i = 0; i < 10; i++)
+            {
+                if (waveOut.Volume > 0.1f)
+                {
+                    waveOut.Volume -= .1f;
+                }
+                else break;
+                Thread.Sleep(300);
+            }
         }
 
         private void btnStop_Click(object sender, EventArgs e)
@@ -660,9 +672,12 @@ namespace KBAudioPlayer
             SliderValue = 0;
             picSlider.Refresh();
             label2.Text = "00:00";
+            //플레이어를 종료하기 전에 볼륨을 페이드 아웃
+            VolumeFadeOut();
             if (reader != null)
                 this._playback.Stop();
             playTime.Stop();
+            //waveOut.Volume = temp;
 
         }
 
@@ -875,21 +890,32 @@ namespace KBAudioPlayer
         {
             if (lstSongs.SelectedIndices.Count > 0)
             {
+
+                //
                 var item = lstSongs.SelectedItems[0];
                 
                 item_current = item.SubItems[1].Text;
-                Console.WriteLine(item_current);
+                //Console.WriteLine(item_current);
                 int index = getPlayIndex(item_current);
-                Console.WriteLine(index);
-                if (index > -1)
+                //Console.WriteLine(index);
+                if (index != -1)
                 {
+                    
+                    lstSongs.BeginUpdate();
+                    lstSongs.Items.RemoveAt(index);
+                    //lstSongs.Items.Add(new ListViewItem("새 아이템"));
+                    
+
+                    lstSongs.EndUpdate();
                     playlist.RemoveAt(index);
                 }
                 //
-                UpdatePlaylist();
-                lstSongs.Items[index].Selected = true;
-                lstSongs.Items[index].Focused = true;
-                lstSongs.Items[index].EnsureVisible();
+                //UpdatePlaylist();
+                //lstSongs.Items[index].Selected = true;
+                //lstSongs.Items[index].Focused = true;
+                //lstSongs.Items[index].EnsureVisible();
+                //save list
+                SavePlayList();
             }
 
         }

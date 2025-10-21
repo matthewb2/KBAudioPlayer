@@ -49,7 +49,6 @@ namespace KBAudioPlayer
         private Boolean isPlay = false;
         private int timeElapsed = 0;
         private TimeSpan duration;
-        //private string current = null;
         private int currentNum = 0;
 
         private int NumLEDS = 20;
@@ -82,12 +81,13 @@ namespace KBAudioPlayer
             InitializeComponent();
             path = Directory.GetCurrentDirectory();
             Icon = Icon.ExtractAssociatedIcon(System.Reflection.Assembly.GetExecutingAssembly().Location);
-            this.Load += Form1_Load;
+
+            //this.Load += Form1_Load;
             this.Closing += Form1_Closing;
             this.Resize += Form1_Resize;
-            this.MouseClick += Form1_MouseClick;
-            this.MouseDown += Form1_MouseDown;
-            this.MouseMove += Form1_MouseMove;
+            //this.MouseClick += Form1_MouseClick;
+            //this.MouseDown += Form1_MouseDown;
+            //this.MouseMove += Form1_MouseMove;
 
             tabControl1.HandleCreated += new EventHandler(tabControl1_HandleCreated);
             tabControl1.MouseClick += new MouseEventHandler(tabControl1_MouseClick);
@@ -104,22 +104,17 @@ namespace KBAudioPlayer
             lstSongs.DragEnter += new System.Windows.Forms.DragEventHandler(lstSongs_DragEnter);
             lstSongs.ItemDrag += new System.Windows.Forms.ItemDragEventHandler(lstSongs_ItemDrag);
             lstSongs.DragOver += new DragEventHandler(lstSongs_DragOver);
-
-            //lstSongs.VirtualMode = true;
-            //UpdatePlaylist();
-            //lstSongs.VirtualListSize = playlist.Count;
-            //lstSongs.RetrieveVirtualItem += ListView1_RetrieveVirtualItem;
+            //lstSongs.SizeChanged += new System.EventHandler(lstSongs_SizeChanged);
 
             // volume spectrum
             this.peakMeterCtrl1.SetRange(40, 70, 100);
             this.peakMeterCtrl1.Start(33);
-            //
-            lstSongs.Columns.Add("순번");
-            lstSongs.Columns.Add("곡명");
-            lstSongs.Columns.Add("길이");
-            lstSongs.Columns[0].Width = 25;
-            lstSongs.Columns[1].Width = 183;
-            lstSongs.Columns[2].Width = 40;
+            
+
+            lstSongs.SelectedIndexChanged += (s, e) => Console.WriteLine("SelectedIndexChanged");
+            lstSongs.MouseClick += (s, e) => Console.WriteLine("MouseClick");
+            lstSongs.Click += (s, e) => Console.WriteLine("Click");
+
 
             //
             bands = new EqualizerBand[]
@@ -135,40 +130,65 @@ namespace KBAudioPlayer
                         new EqualizerBand {Bandwidth = 0.8f, Frequency = 8000, Gain = 0},
                         new EqualizerBand {Bandwidth = 0.8f, Frequency = 16000, Gain = 0},
                    };
-
-
             equalizerForm = new Form2();
             Screen myScreen = Screen.FromControl(this);
             Rectangle area = myScreen.WorkingArea;
             this.Location = new Point(area.Width - this.Size.Width - 200, area.Height - this.ClientSize.Height - 200);
             ToolTip addtoolTip = new ToolTip();
-
             addtoolTip.AutoPopDelay = 5000;
             addtoolTip.InitialDelay = 1000;
             addtoolTip.ReshowDelay = 500;
             addtoolTip.ShowAlways = true;
             addtoolTip.IsBalloon = true;
-
             addtoolTip.SetToolTip(this.button3, "추가");
             tabPage1.Text = "선곡1";
             tabPage2.Text = "+";
-            SetHeight(lstSongs, 30);
 
-            lstSongs.VScrollbar = new ScrollbarCollector(scrollbar1);
-            HideHorizontalScrollBar();
 
+
+            lstSongs.Columns.Add("순번", 25);
+            lstSongs.Columns.Add("곡명", 163);
+            lstSongs.Columns.Add("길이", 60);
+            //lstSongs.Columns[0].Width = 25;
+            //lstSongs.Columns[1].Width = 183;
+            //lstSongs.Columns[2].Width = -2;
+            //
+            SetHeight(lstSongs, 32);
+            
+            // 1. ListView의 View 속성이 Details인지 확인
+            if (lstSongs.View == View.Details)
+            {
+                // 2. 마지막 컬럼의 인덱스 가져오기 (0부터 시작)
+                int lastColumnIndex = lstSongs.Columns.Count - 1;
+
+                if (lastColumnIndex >= 0)
+                {                    
+                    // 마지막 컬럼의 너비를 ListView의 너비에 맞추어 설정 (Fill 역할)
+                    //lstSongs.Columns[lastColumnIndex].Width = -2; // -2는 ListView의 너비에 맞춰 자동 조정하도록 지시
+                }
+            }
+            // 2. 가로 스크롤바 강제 숨김
+            //ListViewScrollHelper.HideHorizontalScrollBar(lstSongs);
+
+            this.Load += Form1_Load;
 
         }
 
-        private void ListView1_RetrieveVirtualItem(object sender, RetrieveVirtualItemEventArgs e)
+        // 이 메서드는 lstSongs의 크기가 변경될 때마다 실행됩니다.
+        private void lstSongs_SizeChanged(object sender, EventArgs e)
         {
-            // ListView는 이 이벤트를 "보이는 부분만" 요청함
-            e.Item = new ListViewItem(playlist[e.ItemIndex]);
-        }
+            // 1. 컬럼 너비를 조정하여 가로 스크롤바가 생기는 것을 방지하는 로직을 여기에 넣습니다.
+            int lastColumnIndex = lstSongs.Columns.Count - 1;
 
-        private void lstSongs_MouseEnter(object sender, MouseEventArgs e)
-        {
-            this.Cursor = Cursors.Default;
+            if (lastColumnIndex >= 0)
+            {
+                // 마지막 컬럼이 남은 공간을 채우도록 설정
+                lstSongs.Columns[lastColumnIndex].Width = -2;
+            }
+
+            // 2. 만약 -2 설정으로 해결되지 않았다면, API 호출 코드를 여기에 추가하여
+            //    가로 스크롤바를 강제로 숨깁니다.
+            ListViewScrollHelper.HideHorizontalScrollBar(lstSongs);
         }
 
 
@@ -179,8 +199,6 @@ namespace KBAudioPlayer
             listView.SmallImageList = imgList;
         }
 
-
-
         private void lstSongs_ItemDrag(object sender, ItemDragEventArgs e)
         {
 
@@ -189,7 +207,6 @@ namespace KBAudioPlayer
             lstSongs.DoDragDrop(e.Item, DragDropEffects.Move);
 
         }
-
 
         private void lstSongs_DragEnter(object sender, DragEventArgs e)
         {
@@ -201,7 +218,6 @@ namespace KBAudioPlayer
         {
             // Retrieve the client coordinates of the mouse pointer.
             Point targetPoint = lstSongs.PointToClient(new Point(e.X, e.Y));
-
             // Retrieve the index of the item closest to the mouse pointer.
             targetIndex = lstSongs.InsertionMark.NearestIndex(targetPoint);
 
@@ -209,7 +225,6 @@ namespace KBAudioPlayer
 
         private void lstSongs_DragDrop(object sender, DragEventArgs e)
         {
-            //Debug.WriteLine(targetIndex);
             playlist.RemoveAt(item_index);
             playlist.Insert(targetIndex, item_current);
             UpdatePlaylist();
@@ -232,29 +247,14 @@ namespace KBAudioPlayer
             btnDown.Location = new Point(76, control.Size.Height - (470 - 389));
             btnToBottom.Location = new Point(112, control.Size.Height - (470 - 389));
             btnDelete.Location = new Point(146, control.Size.Height - (470 - 389));
-            button3.Location = new Point(242, control.Size.Height - (470 - 389));
-            //
-            scrollbar1.Size = new Size(scrollbar1.Size.Width, lstSongs.Size.Height);
+            button3.Location = new Point(242, control.Size.Height - (470 - 389));           
 
         }
         // set focus to volume slider when click form
         void Form1_MouseClick(object sender, MouseEventArgs e)
         {
-            volumeSlider.Focus();
+           // volumeSlider.Focus();
         }
-
-
-        protected override void WndProc(ref Message m)
-        {
-            base.WndProc(ref m);
-            //
-            if (m.Msg == WM_NCLBUTTONDOWN)
-            {
-                this.Cursor = new Cursor(Cursor.Current.Handle);
-                volumeSlider.Focus();
-            }
-        }
-
 
 
         void lstSongs_MouseDoubleClick(object sender, MouseEventArgs e)
@@ -363,8 +363,6 @@ namespace KBAudioPlayer
                 }
             }
         }
-  
-
         private void playTime_Tick(object sender, EventArgs e)
         {
             FillMeterData();
@@ -390,11 +388,10 @@ namespace KBAudioPlayer
                 index2 = lstSongs.SelectedIndices[0];
                 cur = playlist[index2];
             }
-            //string cur = playlist[index2];
+            
             cur = Path.GetFileName(cur);
             FileInfo fi = new FileInfo(cur);
 			
-            //label1.Text = cur.Replace(fi.Extension, "");
             if (fi.Extension == ".flac")
             {
 
@@ -417,57 +414,6 @@ namespace KBAudioPlayer
                     // 재생이 파일 끝까지 도달했을 때
                     if (reader.CurrentTime == reader.TotalTime)
                     {
-                        //MessageBox.Show("file ended");
-                        /*
-                        int index = getIndexFromSelect(item_current);
-                        //
-                        if (tabControl1.SelectedIndex == 1)
-                        {
-                            if (index <= playlist2.Count - 1)
-                            {
-                                newlstSongs.Items[index].Selected = false;
-                                newlstSongs.Items[index + 1].Selected = true;
-                                waveOut.Stop();
-                                //
-                                PlayAudio(playlist2[index + 1]);
-                                // update current song
-                                current = playlist2[index + 1];
-
-                            }
-                            else
-                            {
-                                waveOut.Stop();
-                                if (reader != null) playTime.Stop();
-                                if (_playback != null)
-                                {
-                                    if (_playback.IsPlaying()) _playback.Stop();
-                                }
-                            }
-                        }
-                        else
-                        {
-                            if (index < playlist.Count - 1 && index>=0)
-                            {
-                                //Debug.WriteLine(index);
-                                lstSongs.Items[index].Selected = false;
-                                lstSongs.Items[index + 1].Selected = true;
-                                waveOut.Stop();
-                                PlayAudio(playlist[index + 1]);
-                                // update current song
-                                item_current = playlist[index + 1];
-
-                            }
-                            else
-                            {
-                                waveOut.Stop();
-                                if (reader != null) playTime.Stop();
-                                if (_playback != null)
-                                {
-                                    if (_playback.IsPlaying()) _playback.Stop();
-                                }
-                            }
-                        }
-                        */
                         waveOut.Stop();
                         Console.WriteLine(item_current);
                         int index = getIndexFromSelect(item_current);
@@ -484,8 +430,6 @@ namespace KBAudioPlayer
                 }
             }
         }
-
-
 
 
         private void Form1_Load(object sender, EventArgs e)
@@ -540,9 +484,8 @@ namespace KBAudioPlayer
 
                     }
                 }
-            }
+            }            
             */
-
         }
         private void setVolume(int volume)
         {
@@ -677,35 +620,8 @@ namespace KBAudioPlayer
             if (reader != null)
                 this._playback.Stop();
             playTime.Stop();
-            //waveOut.Volume = temp;
 
         }
-
-        private int getPlayIndex(string item_current)
-        {
-            if (item_current == null)
-                return -1;
-
-            item_current = Path.GetFileName(item_current);
-            FileInfo fi2 = new FileInfo(item_current);
-            if (fi2.Extension.Length > 0)
-                item_current = item_current.Replace(fi2.Extension, "");
-
-            for (int i = 0; i <= playlist.Count - 1; i++)
-            {
-                string name = playlist[i];
-                name = Path.GetFileName(name);
-                FileInfo fi = new FileInfo(name);
-                string ext = fi.Extension;
-                name = name.Replace(ext, "");
-                //
-                if (item_current.Contains(name))
-                    return i;
-
-            }
-            return -1;
-        }
-
 
 
         private void volumeSlider_ValueChanged(object sender, System.EventArgs e)
@@ -758,7 +674,6 @@ namespace KBAudioPlayer
             }
         }
         
-
         private void button3_Click(object sender, EventArgs e)
         {
             openFileDialog.Filter = "오디오 파일|*.mp3;*.flac|All files (*.*)|*.*";
@@ -776,8 +691,6 @@ namespace KBAudioPlayer
                 }
             }
         }
-
-
         private void button4_Click(object sender, EventArgs e)
         {
             waveOut.Pause();
@@ -795,9 +708,7 @@ namespace KBAudioPlayer
                 timeElapsed = 0;
             }
             timeElapsed += 1000;
-            float step = .1f;
-            //waveOut.Volume -= step;
-
+            
         }
 
 

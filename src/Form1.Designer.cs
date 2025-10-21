@@ -56,7 +56,8 @@
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.scrollbar1 = new Deveck.Ui.Controls.Scrollbar.CustomScrollbar();
             this.tabControl1 = new System.Windows.Forms.TabControl();
-            this.lstSongs = new KBAudioPlayer.ListViewWithoutScrollBar();
+            this.lstSongs = new System.Windows.Forms.ListView();
+            //this.lstSongs = new KBAudioPlayer.ListViewWithoutScrollBar();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.picSlider)).BeginInit();
             this.tabPage1.SuspendLayout();
@@ -360,7 +361,7 @@
             // tabPage1
             // 
             this.tabPage1.Controls.Add(this.lstSongs);
-            this.tabPage1.Controls.Add(this.scrollbar1);
+            //this.tabPage1.Controls.Add(this.scrollbar1);
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
@@ -371,6 +372,7 @@
             // 
             // scrollbar1
             // 
+            /*
             this.scrollbar1.ActiveBackColor = System.Drawing.Color.Gray;
             this.scrollbar1.LargeChange = 10;
             this.scrollbar1.Location = new System.Drawing.Point(248, -12);
@@ -382,6 +384,7 @@
             this.scrollbar1.TabIndex = 0;
             this.scrollbar1.ThumbStyle = Deveck.Ui.Controls.Scrollbar.CustomScrollbar.ThumbStyleEnum.Auto;
             this.scrollbar1.Value = 0;
+            */
             // 
             // tabControl1
             // 
@@ -399,21 +402,21 @@
             this.lstSongs.AllowDrop = true;
             this.lstSongs.AutoArrange = false;
             this.lstSongs.BackColor = System.Drawing.SystemColors.InactiveBorder;
-            this.lstSongs.Dock = System.Windows.Forms.DockStyle.Left;
+            this.lstSongs.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lstSongs.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F);
             this.lstSongs.ForeColor = System.Drawing.SystemColors.InactiveCaptionText;
             this.lstSongs.FullRowSelect = true;
             this.lstSongs.GridLines = true;
             this.lstSongs.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
             this.lstSongs.HideSelection = false;
-            this.lstSongs.Location = new System.Drawing.Point(3, 3);
+            //this.lstSongs.Location = new System.Drawing.Point(3, 3);
             this.lstSongs.Name = "lstSongs";
             this.lstSongs.ShowItemToolTips = true;
-            this.lstSongs.Size = new System.Drawing.Size(239, 227);
+            //this.lstSongs.Size = new System.Drawing.Size(239, 227);
             this.lstSongs.TabIndex = 19;
             this.lstSongs.UseCompatibleStateImageBehavior = false;
             this.lstSongs.View = System.Windows.Forms.View.Details;
-            this.lstSongs.VScrollbar = null;
+            //this.lstSongs.VScrollbar = Ture;
             
             // 
             // Form1
@@ -481,10 +484,9 @@
         private Tulpep.NotificationWindow.PopupNotifier popupNotifier1;
         private System.Windows.Forms.TabPage tabPage2;
         private System.Windows.Forms.TabPage tabPage1;
-        //private System.Windows.Forms.ListView lstSongs;
-        private ListViewWithoutScrollBar lstSongs;
+		private System.Windows.Forms.ListView lstSongs;
+        //private ListViewWithoutScrollBar lstSongs;
         private System.Windows.Forms.TabControl tabControl1;
-        //private Deveck.Ui.Controls.CustomListView lstSongs;
         private Deveck.Ui.Controls.Scrollbar.CustomScrollbar scrollbar1;
     }
 }

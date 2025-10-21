@@ -140,7 +140,7 @@ namespace KBAudioPlayer
             addtoolTip.ReshowDelay = 500;
             addtoolTip.ShowAlways = true;
             addtoolTip.IsBalloon = true;
-            addtoolTip.SetToolTip(this.button3, "추가");
+            addtoolTip.SetToolTip(this.btnAdd, "추가");
             tabPage1.Text = "선곡1";
             tabPage2.Text = "+";
 
@@ -247,7 +247,7 @@ namespace KBAudioPlayer
             btnDown.Location = new Point(76, control.Size.Height - (470 - 389));
             btnToBottom.Location = new Point(112, control.Size.Height - (470 - 389));
             btnDelete.Location = new Point(146, control.Size.Height - (470 - 389));
-            button3.Location = new Point(242, control.Size.Height - (470 - 389));           
+            btnAdd.Location = new Point(242, control.Size.Height - (470 - 389));           
 
         }
         // set focus to volume slider when click form
@@ -674,7 +674,7 @@ namespace KBAudioPlayer
             }
         }
         
-        private void button3_Click(object sender, EventArgs e)
+        private void btnAdd_Click(object sender, EventArgs e)
         {
             openFileDialog.Filter = "오디오 파일|*.mp3;*.flac|All files (*.*)|*.*";
             openFileDialog.FilterIndex = 1;

@@ -44,7 +44,7 @@
             this.btnDelete = new System.Windows.Forms.Button();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.picSlider = new System.Windows.Forms.PictureBox();
-            this.button3 = new System.Windows.Forms.Button();
+            this.btnAdd = new System.Windows.Forms.Button();
             this.btnStop = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
             this.btnToBottom = new System.Windows.Forms.Button();
@@ -60,6 +60,9 @@
             //this.lstSongs = new KBAudioPlayer.ListViewWithoutScrollBar();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.picSlider)).BeginInit();
+            this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
+            this.splitContainer1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.SuspendLayout();
@@ -218,7 +221,7 @@
             this.btnDelete.FlatAppearance.BorderSize = 0;
             this.btnDelete.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnDelete.Image = ((System.Drawing.Image)(resources.GetObject("btnDelete.Image")));
-            this.btnDelete.Location = new System.Drawing.Point(148, 409);
+            this.btnDelete.Location = new System.Drawing.Point(148, 0);
             this.btnDelete.Name = "btnDelete";
             this.btnDelete.Size = new System.Drawing.Size(30, 23);
             this.btnDelete.TabIndex = 16;
@@ -250,17 +253,17 @@
             this.picSlider.MouseMove += new System.Windows.Forms.MouseEventHandler(this.picSlider_MouseMove);
             this.picSlider.MouseUp += new System.Windows.Forms.MouseEventHandler(this.picSlider_MouseUp);
             // 
-            // button3
+            // btnAdd
             // 
-            this.button3.FlatAppearance.BorderSize = 0;
-            this.button3.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button3.Image = global::KBAudioPlayer.Properties.Resources.text_plus_icon;
-            this.button3.Location = new System.Drawing.Point(242, 409);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(30, 23);
-            this.button3.TabIndex = 7;
-            this.button3.UseVisualStyleBackColor = true;
-            this.button3.Click += new System.EventHandler(this.button3_Click);
+            this.btnAdd.FlatAppearance.BorderSize = 0;
+            this.btnAdd.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnAdd.Image = global::KBAudioPlayer.Properties.Resources.text_plus_icon;
+            this.btnAdd.Location = new System.Drawing.Point(242, 0);
+            this.btnAdd.Name = "btnAdd";
+            this.btnAdd.Size = new System.Drawing.Size(30, 23);
+            this.btnAdd.TabIndex = 7;
+            this.btnAdd.UseVisualStyleBackColor = true;
+            this.btnAdd.Click += new System.EventHandler(this.btnAdd_Click);
             // 
             // btnStop
             // 
@@ -291,7 +294,7 @@
             this.btnToBottom.FlatAppearance.BorderSize = 0;
             this.btnToBottom.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnToBottom.Image = global::KBAudioPlayer.Properties.Resources.arrow_stop_270_icon;
-            this.btnToBottom.Location = new System.Drawing.Point(112, 409);
+            this.btnToBottom.Location = new System.Drawing.Point(112, 0);
             this.btnToBottom.Name = "btnToBottom";
             this.btnToBottom.Size = new System.Drawing.Size(30, 23);
             this.btnToBottom.TabIndex = 4;
@@ -303,7 +306,7 @@
             this.btnDown.FlatAppearance.BorderSize = 0;
             this.btnDown.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnDown.Image = global::KBAudioPlayer.Properties.Resources.arrow_skip_270_icon;
-            this.btnDown.Location = new System.Drawing.Point(76, 409);
+            this.btnDown.Location = new System.Drawing.Point(76, 0);
             this.btnDown.Name = "btnDown";
             this.btnDown.Size = new System.Drawing.Size(30, 23);
             this.btnDown.TabIndex = 3;
@@ -315,7 +318,7 @@
             this.btnUp.FlatAppearance.BorderSize = 0;
             this.btnUp.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnUp.Image = global::KBAudioPlayer.Properties.Resources.arrow_skip_090_icon;
-            this.btnUp.Location = new System.Drawing.Point(40, 409);
+            this.btnUp.Location = new System.Drawing.Point(40, 0);
             this.btnUp.Name = "btnUp";
             this.btnUp.Size = new System.Drawing.Size(30, 23);
             this.btnUp.TabIndex = 2;
@@ -327,7 +330,7 @@
             this.btnToTop.FlatAppearance.BorderSize = 0;
             this.btnToTop.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnToTop.Image = global::KBAudioPlayer.Properties.Resources.arrow_stop_090_icon;
-            this.btnToTop.Location = new System.Drawing.Point(4, 409);
+            this.btnToTop.Location = new System.Drawing.Point(4, 0);
             this.btnToTop.Name = "btnToTop";
             this.btnToTop.Size = new System.Drawing.Size(30, 23);
             this.btnToTop.TabIndex = 1;
@@ -417,7 +420,36 @@
             this.lstSongs.UseCompatibleStateImageBehavior = false;
             this.lstSongs.View = System.Windows.Forms.View.Details;
             //this.lstSongs.VScrollbar = Ture;
-            
+            // splitContainer1
+            // 
+            this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainer1.Location = new System.Drawing.Point(0, 0);
+            this.splitContainer1.Name = "splitContainer1";
+            this.splitContainer1.Orientation = System.Windows.Forms.Orientation.Horizontal;
+            this.splitContainer1.Size = new System.Drawing.Size(284, 441);
+            this.splitContainer1.SplitterDistance = 400;
+            this.splitContainer1.TabIndex = 0;
+            this.splitContainer1.Panel1.Controls.Add(this.tabControl1);
+            this.splitContainer1.Panel1.Controls.Add(this.speakerButton);
+            this.splitContainer1.Panel1.Controls.Add(this.button7);
+            this.splitContainer1.Panel1.Controls.Add(this.btnNext);
+            this.splitContainer1.Panel1.Controls.Add(this.label3);
+            this.splitContainer1.Panel1.Controls.Add(this.label2);
+            this.splitContainer1.Panel1.Controls.Add(this.pictureBox2);
+            this.splitContainer1.Panel1.Controls.Add(this.picSlider);
+            this.splitContainer1.Panel1.Controls.Add(this.label1);            
+            this.splitContainer1.Panel1.Controls.Add(this.btnStop);
+            this.splitContainer1.Panel1.Controls.Add(this.button1);
+            this.splitContainer1.Panel1.Controls.Add(this.peakMeterCtrl1);
+            this.splitContainer1.Panel1.Controls.Add(this.volumeSlider);
+            //
+            this.splitContainer1.Panel2.Controls.Add(this.btnDelete);
+            this.splitContainer1.Panel2.Controls.Add(this.btnAdd);
+            this.splitContainer1.Panel2.Controls.Add(this.btnToBottom);
+            this.splitContainer1.Panel2.Controls.Add(this.btnDown);
+            this.splitContainer1.Panel2.Controls.Add(this.btnUp);
+            this.splitContainer1.Panel2.Controls.Add(this.btnToTop);
+
             // 
             // Form1
             // 
@@ -425,6 +457,8 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(284, 441);
+            this.Controls.Add(this.splitContainer1);
+            /*
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.speakerButton);
             this.Controls.Add(this.button7);
@@ -435,7 +469,7 @@
             this.Controls.Add(this.pictureBox2);
             this.Controls.Add(this.picSlider);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.button3);
+            this.Controls.Add(this.btnAdd);
             this.Controls.Add(this.btnStop);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.btnToBottom);
@@ -444,6 +478,7 @@
             this.Controls.Add(this.btnToTop);
             this.Controls.Add(this.peakMeterCtrl1);
             this.Controls.Add(this.volumeSlider);
+            */
             this.MaximizeBox = false;
             this.MaximumSize = new System.Drawing.Size(300, 800);
             this.MinimumSize = new System.Drawing.Size(300, 460);
@@ -466,7 +501,7 @@
         private System.Windows.Forms.Button btnToBottom;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button btnStop;
-        private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.Button btnAdd;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.OpenFileDialog openFileDialog;
         private System.Windows.Forms.Timer timer1;
@@ -488,6 +523,7 @@
         //private ListViewWithoutScrollBar lstSongs;
         private System.Windows.Forms.TabControl tabControl1;
         private Deveck.Ui.Controls.Scrollbar.CustomScrollbar scrollbar1;
+        private System.Windows.Forms.SplitContainer splitContainer1;
     }
 }
 

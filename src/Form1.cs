@@ -85,8 +85,10 @@ namespace KBAudioPlayer
             //this.Load += Form1_Load;
             this.Closing += Form1_Closing;
             this.Resize += Form1_Resize;
-            //this.MouseClick += Form1_MouseClick;
-            //this.MouseDown += Form1_MouseDown;
+            this.MouseClick += Form1_MouseClick;
+            this.MouseDown += Form1_MouseDown;
+            
+            splitContainer1.Panel1.MouseDown += Panel1_MouseDown;
             //this.MouseMove += Form1_MouseMove;
 
             tabControl1.HandleCreated += new EventHandler(tabControl1_HandleCreated);
@@ -687,7 +689,18 @@ namespace KBAudioPlayer
                 {
                     string filePath = openFileDialog.FileNames[i];
                     playlist.Add(filePath);
-                    UpdatePlaylist();
+                    //UpdatePlaylist();
+
+                    lstSongs.BeginUpdate();
+                    string result = Path.GetFileName(filePath);
+                    result = result.Replace(".mp3", "");
+                    result = result.Replace(".flac", "");
+                    TagLib.File f = TagLib.File.Create(filePath, TagLib.ReadStyle.Average);
+                    System.TimeSpan duration = f.Properties.Duration;                    
+                    string[] item = { playlist.Count().ToString(), result, duration.ToString("mm':'ss") };                    
+                    lstSongs.Items.Add(new ListViewItem(item));                    
+                    lstSongs.EndUpdate();
+                    
                 }
             }
         }
@@ -1069,6 +1082,114 @@ namespace KBAudioPlayer
                         m.MenuItems.Add(m5);
                         m.MenuItems.Add(m_close);
                         m.Show(this, new Point(e.X, e.Y + 150));
+                    }
+                    break;
+            }
+        }
+
+        private void Panel1_MouseDown(object sender, MouseEventArgs e)
+        {
+
+
+            switch (e.Button)
+            {
+                case MouseButtons.Left:
+                    MouseDownLocation = e.Location;
+                    break;
+                case MouseButtons.Right:
+                    {
+                        ContextMenu m = new ContextMenu();
+                        MenuItem m1 = new MenuItem("이퀄라이저");
+                        m1.Click += (senders, es) => {
+                            equalizerForm.Show();
+                        };
+                        MenuItem m3 = new MenuItem("창 가장자리 보이기");
+                        m3.Checked = isTitle;
+                        m3.Click += (senders, es) => {
+                            if (m3.Checked == true)
+                            {
+                                this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+                                isTitle = false;
+                            }
+                            else
+                            {
+                                this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Sizable;
+                                isTitle = true;
+                            }
+                        };
+
+                        MenuItem m2 = new MenuItem("스킨");
+                        MenuItem mm1 = new MenuItem("기본");
+                        MenuItem mm2 = new MenuItem("파스텔");
+                        if (defaultskin)
+                        {
+                            mm1.Checked = true;
+                        }
+                        else mm2.Checked = true;
+
+                        mm1.Click += (senders, es) =>
+                        {
+                            this.BackColor = System.Drawing.Color.White;
+                            this.Refresh();
+                            defaultskin = true;
+                            mm1.Checked = true;
+                            mm2.Checked = false;
+
+                        };
+                        mm2.Click += (senders, es) =>
+                        {
+                            this.BackColor = System.Drawing.Color.AliceBlue;
+                            this.Refresh();
+                            mm2.Checked = true;
+                            defaultskin = false;
+                            mm1.Checked = defaultskin;
+                        };
+                        m2.MenuItems.Add(mm1);
+                        m2.MenuItems.Add(mm2);
+
+                        MenuItem m4 = new MenuItem("닫기(C)");
+
+                        m4.Click += (senders, es) => {
+                            playerClose();
+                        };
+                        MenuItem m5 = new MenuItem("파일이 존재하지 않는 목록 삭제");
+                        m5.Click += (senders, es) => {
+                            List<string> newplaylist = new List<string>();
+                            for (int i = 0; i < playlist.Count; i++)
+                            {
+                                string result = Path.GetFileName(playlist[i]);
+
+                                if (File.Exists(playlist[i]))
+                                {
+                                    newplaylist.Add(playlist[i]);
+
+                                }
+                            }
+                            playlist.Clear();
+                            for (int i = 0; i < newplaylist.Count; i++)
+                            {
+                                playlist.Add(newplaylist[i]);
+                            }
+                            UpdatePlaylist();
+                        };
+                        MenuItem m6 = new MenuItem("선택 삭제");
+
+
+                        MenuItem m_about = new MenuItem("정보(A)");
+                        m_about.Click += (senders, es) => {
+                            About about = new About();
+                            about.Show();
+                        };
+
+
+                        m.MenuItems.Add(m1);
+                        m.MenuItems.Add(m2);
+                        m.MenuItems.Add(m3);
+                        m.MenuItems.Add(m5);
+                        m.MenuItems.Add(m6);
+                        m.MenuItems.Add(m_about);
+                        m.MenuItems.Add(m4);
+                        m.Show(this, new Point(e.X, e.Y));//places the menu at the pointer position
                     }
                     break;
             }

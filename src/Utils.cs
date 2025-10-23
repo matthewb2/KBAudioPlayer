@@ -29,9 +29,37 @@ namespace KBAudioPlayer
     public partial class Form1
 
     {
+		
+        private int getPlayIndex(string item_current)
+        {
+            if (item_current == null)
+                return -1;
+
+            item_current = Path.GetFileName(item_current);
+            FileInfo fi2 = new FileInfo(item_current);
+            if (fi2.Extension.Length > 0)
+                item_current = item_current.Replace(fi2.Extension, "");
+
+            for (int i = 0; i <= playlist.Count - 1; i++)
+            {
+                string name = playlist[i];
+                name = Path.GetFileName(name);
+                FileInfo fi = new FileInfo(name);
+                string ext = fi.Extension;
+                name = name.Replace(ext, "");
+                //
+                if (item_current.Contains(name))
+                    return i;
+
+            }
+            return -1;
+        }
+		
         void UpdatePlaylist()
         {
+			//MessageBox.Show(playlist.Count.ToString());
             lstSongs.Items.Clear();
+            List<ListViewItem> items = new List<ListViewItem>();
 
             for (int i = 0; i < playlist.Count; i++)
             {
@@ -44,24 +72,40 @@ namespace KBAudioPlayer
                     TagLib.File f = TagLib.File.Create(playlist[i], TagLib.ReadStyle.Average);
                     System.TimeSpan duration = f.Properties.Duration;
                     string songlength = duration.ToString("mm':'ss");
-                    string[] item = { (i + 1).ToString(), result, songlength };
-                    lstSongs.Items.Add(new ListViewItem(item));
+                    //string[] item = { (i + 1).ToString(), result, songlength };
+                    //lstSongs.Items.Add(new ListViewItem(item));
+                    ListViewItem item = new ListViewItem((i+1).ToString());
+                    //item.SubItems.Add((i + 1).ToString());
+                    item.SubItems.Add(result); 
+                    item.SubItems.Add(songlength);
+                    items.Add(item);
                 }
                 else
                 {
+					/*
                     string[] item = { (i + 1).ToString(), "!" + result, "" };
                     ListViewItem tmp = new ListViewItem(item);
                     tmp.ToolTipText = "파일이 이동되었거나 삭제되었습니다";
                     tmp.ForeColor = System.Drawing.Color.Red;
                     lstSongs.Items.Add(tmp);
+					*/
 
                 }
             }
+            /*
+            ImageList imgList = new ImageList();
+            imgList.ImageSize = new Size(1, lstSongs.Font.Height + 2);
+            lstSongs.SmallImageList = imgList;
+            */
+            lstSongs.Items.AddRange(items.ToArray());
+
+
             if (reader != null) playTime.Stop();
             if (_playback != null)
             {
                 if (_playback.IsPlaying()) _playback.Stop();
             }
+			/*
             File.WriteAllText(path + @"\playlist.dat", string.Empty);
             FileStream fs = File.Open(path + @"\playlist.dat", FileMode.Open);
             //write again
@@ -76,7 +120,7 @@ namespace KBAudioPlayer
             writer.Dispose();
             writer.Close();
             WriteXML();
-
+			*/
         }
 
         private void SavePlayList()
@@ -117,6 +161,7 @@ namespace KBAudioPlayer
                     }
 
                 }
+				
                 File.WriteAllText(path + @"\playlist.dat", string.Empty);
                 FileStream fs = File.Open(path + @"\playlist.dat", FileMode.Open);
                 //write again
@@ -129,12 +174,15 @@ namespace KBAudioPlayer
                     }
 
                 }
+				
                 waveOut.Stop();
                 waveOut.Dispose();
+				
                 writer.Dispose();
                 writer.Close();
                 WriteXML();
                 WriteJson(getPlayIndex(item_current));
+				
                 timer1.Stop();
             }
 

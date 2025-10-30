@@ -82,7 +82,7 @@ namespace KBAudioPlayer
             path = Directory.GetCurrentDirectory();
             Icon = Icon.ExtractAssociatedIcon(System.Reflection.Assembly.GetExecutingAssembly().Location);
 
-            //this.Load += Form1_Load;
+            this.Load += Form1_Load;
             this.Closing += Form1_Closing;
             this.Resize += Form1_Resize;
             this.MouseClick += Form1_MouseClick;
@@ -261,40 +261,7 @@ namespace KBAudioPlayer
 
         void lstSongs_MouseDoubleClick(object sender, MouseEventArgs e)
         {
-            if (lstSongs.SelectedItems.Count == 0 || lstSongs.SelectedIndices.Count == 0)
-                return; // 선택된 항목이 없으면 바로 종료
-
-            playTime.Start();
-            this._playback = new RealTimePlayback();
-            this._playback.Start();
-
-            var item = lstSongs.SelectedItems[0];
-            item_current = item.SubItems[1].Text;
-            Debug.WriteLine(item_current);
-            if (item_current != null)
-            {
-                label1.Text = Path.GetFileName(item_current);
-                //
-                int index = lstSongs.SelectedIndices[0];
-                if (index >= 0)
-                {
-                    waveOut.Stop();
-                    PlayAudio(playlist[index]);
-                    duration = reader.TotalTime;
-                    label3.Text = duration.ToString(@"mm\:ss");
-                    item_current = playlist[index];
-                    label1.Text = Path.GetFileName(item_current);
-							
-					isPlay = true;				
-
-                }
-            }
-            // change play button icon to pause icon
-            if (isPlay)
-            {
-                button1.Image = new Bitmap(@"res\control-pause-icon.png");
-
-            }
+            StartPlayer();
 
         }
 
@@ -367,8 +334,7 @@ namespace KBAudioPlayer
         }
         private void playTime_Tick(object sender, EventArgs e)
         {
-            FillMeterData();
-
+            
             //플레이어가 재생 중일 때
             // change play button icon to pause icon
             if (isPlay)
@@ -417,20 +383,23 @@ namespace KBAudioPlayer
                     if (reader.CurrentTime == reader.TotalTime)
                     {
                         waveOut.Stop();
-                        Console.WriteLine(item_current);
+                        playTime.Stop();
                         int index = getIndexFromSelect(item_current);
-                        Console.WriteLine(index.ToString());
-                        PlayAudio(playlist[index + 1]);
-                        Console.WriteLine(playlist[index + 1]);
-                        // update current song
-                        item_current = playlist[index + 1];
-                        label1.Text = Path.GetFileName(item_current);
-                        lstSongs.Items[index].Selected = false;
-                        lstSongs.Items[index+1].Selected = true;
+                        if (index < playlist.Count-1)
+                        {
+                            PlayAudio(playlist[index + 1]);
+                            // update current song
+                            item_current = playlist[index + 1];
+                            label1.Text = Path.GetFileName(item_current);
+                            lstSongs.Items[index].Selected = false;
+                            lstSongs.Items[index + 1].Selected = true;
+                        }
+                        
                         
                     }
                 }
             }
+            FillMeterData();
         }
 
 
@@ -448,7 +417,7 @@ namespace KBAudioPlayer
             //
             if (playlist.Count>0)
                 UpdatePlaylist();
-            /*
+            //
             string filePath = "pref.json";
             // JSON 파일 읽기
             string jsonData = File.ReadAllText(filePath);
@@ -457,11 +426,24 @@ namespace KBAudioPlayer
 
             Debug.WriteLine(person.Volume);
             volumeSlider.Value = person.Volume;
-            currentNum = person.selLists;
+            item_index = person.selLists;
 
-            if (currentNum != -1)
-                lstSongs.Items[currentNum].Selected = true;
-            */
+            if (item_index != -1)
+            {
+                lstSongs.Items[item_index].Selected = true;
+                string name = playlist[item_index];
+                if (File.Exists(name))
+                {
+                    string result = Path.GetFileName(name);
+                    result = result.Replace(".mp3", "");
+                    label1.Text = Path.GetFileName(result);
+                    
+                }
+
+
+            }
+
+            
             /*
             using (XmlReader rd = XmlReader.Create(path + @"\pref.xml"))
             {
@@ -587,8 +569,50 @@ namespace KBAudioPlayer
                     this._playback.Start();
                 isPaused = false;
                 isPlay = true;
+            } else
+            {
+                StartPlayer();
             }
 
+        }
+
+        private void StartPlayer()
+        {
+
+            if (lstSongs.SelectedItems.Count == 0 || lstSongs.SelectedIndices.Count == 0)
+                return; // 선택된 항목이 없으면 바로 종료
+
+            playTime.Start();
+            this._playback = new RealTimePlayback();
+            this._playback.Start();
+
+            var item = lstSongs.SelectedItems[0];
+            item_current = item.SubItems[1].Text;
+            //Debug.WriteLine(item_current);
+            if (item_current != null)
+            {
+                label1.Text = Path.GetFileName(item_current);
+                //
+                int index = lstSongs.SelectedIndices[0];
+                if (index >= 0)
+                {
+                    waveOut.Stop();
+                    PlayAudio(playlist[index]);
+                    duration = reader.TotalTime;
+                    label3.Text = duration.ToString(@"mm\:ss");
+                    item_current = playlist[index];
+                    label1.Text = Path.GetFileName(item_current);
+
+                    isPlay = true;
+
+                }
+            }
+            // change play button icon to pause icon
+            if (isPlay)
+            {
+                button1.Image = new Bitmap(@"res\control-pause-icon.png");
+
+            }
         }
 
         private void VolumeFadeOut()

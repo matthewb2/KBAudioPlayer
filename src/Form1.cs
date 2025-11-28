@@ -406,17 +406,23 @@ namespace KBAudioPlayer
         private void Form1_Load(object sender, EventArgs e)
         {
             System.IO.StreamReader file = new System.IO.StreamReader(path + @"\playlist.dat", Encoding.UTF8);
-            string line;            
+            string line;
+            //playlist 초기화
+            playlist.Clear();
             while ((line = file.ReadLine()) != null)
             {
                 //check file exists
                 if (File.Exists(line))
+                {
                     playlist.Add(line);
+                }
             }
             file.Close();
             //
-            if (playlist.Count>0)
+            if (playlist.Count > 0)
+            {
                 UpdatePlaylist();
+            }
             //
             string filePath = "pref.json";
             // JSON 파일 읽기
@@ -430,8 +436,9 @@ namespace KBAudioPlayer
 
             if (item_index != -1)
             {
-                lstSongs.Items[item_index].Selected = true;
-                string name = playlist[item_index];
+                //lstSongs.Items[item_index].Selected = true;
+                //string name = playlist[item_index];
+                /*
                 if (File.Exists(name))
                 {
                     string result = Path.GetFileName(name);
@@ -439,37 +446,9 @@ namespace KBAudioPlayer
                     label1.Text = Path.GetFileName(result);
                     
                 }
-
+                */
 
             }
-
-            
-            /*
-            using (XmlReader rd = XmlReader.Create(path + @"\pref.xml"))
-            {
-                //Debug.WriteLine(path);
-                while (rd.Read())
-                {
-                    if (rd.IsStartElement())
-                    {
-                        if (rd.Name == "Volume")
-                        {
-                            float tmp = float.Parse(rd.ReadString(), CultureInfo.InvariantCulture.NumberFormat);
-                            Debug.WriteLine(tmp);
-                            volumeSlider.Value = (int)(tmp* 100f);
-                        }
-
-                        if (rd.Name == "Height")
-                        {
-                            
-                            float tmp = float.Parse(rd.ReadString(), CultureInfo.InvariantCulture.NumberFormat);
-                            this.ClientSize = new System.Drawing.Size(284, (int)tmp);
-                        }
-
-                    }
-                }
-            }            
-            */
         }
         private void setVolume(int volume)
         {
@@ -1022,6 +1001,8 @@ namespace KBAudioPlayer
             }
 
         }
+
+        
 
         private void newlstSongs_MouseClick(object sender, MouseEventArgs e)
         {

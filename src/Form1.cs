@@ -88,7 +88,6 @@ namespace KBAudioPlayer
             this.MouseClick += Form1_MouseClick;
             this.MouseDown += Form1_MouseDown;
             
-            //splitContainer1.Panel1.MouseDown += Panel1_MouseDown;
             //this.MouseMove += Form1_MouseMove;
 
             tabControl1.HandleCreated += new EventHandler(tabControl1_HandleCreated);
@@ -179,7 +178,22 @@ namespace KBAudioPlayer
         // 이 메서드는 lstSongs의 크기가 변경될 때마다 실행됩니다.
         private void lstSongs_SizeChanged(object sender, EventArgs e)
         {
+<<<<<<< HEAD
             
+=======
+            // 1. 컬럼 너비를 조정하여 가로 스크롤바가 생기는 것을 방지하는 로직을 여기에 넣습니다.
+            int lastColumnIndex = lstSongs.Columns.Count - 1;
+
+            if (lastColumnIndex >= 0)
+            {
+                // 마지막 컬럼이 남은 공간을 채우도록 설정
+                lstSongs.Columns[lastColumnIndex].Width = -2;
+            }
+
+            // 2. 만약 -2 설정으로 해결되지 않았다면, API 호출 코드를 여기에 추가하여
+            //    가로 스크롤바를 강제로 숨깁니다.
+            ListViewScrollHelper.HideHorizontalScrollBar(lstSongs);
+>>>>>>> 23ba571fcd7b43d207680b1f04fe188eba407b1f
         }
 
 
@@ -668,7 +682,38 @@ namespace KBAudioPlayer
             }
         }
         
+<<<<<<< HEAD
         
+=======
+        private void btnAdd_Click(object sender, EventArgs e)
+        {
+            openFileDialog.Filter = "오디오 파일|*.mp3;*.flac|All files (*.*)|*.*";
+            openFileDialog.FilterIndex = 1;
+            openFileDialog.RestoreDirectory = true;
+            openFileDialog.Multiselect = true; // 파일 다중 선택
+
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                for (int i = 0; i < openFileDialog.FileNames.Length; i++)
+                {
+                    string filePath = openFileDialog.FileNames[i];
+                    playlist.Add(filePath);
+                    //UpdatePlaylist();
+
+                    lstSongs.BeginUpdate();
+                    string result = Path.GetFileName(filePath);
+                    result = result.Replace(".mp3", "");
+                    result = result.Replace(".flac", "");
+                    TagLib.File f = TagLib.File.Create(filePath, TagLib.ReadStyle.Average);
+                    System.TimeSpan duration = f.Properties.Duration;                    
+                    string[] item = { playlist.Count().ToString(), result, duration.ToString("mm':'ss") };                    
+                    lstSongs.Items.Add(new ListViewItem(item));                    
+                    lstSongs.EndUpdate();
+                    
+                }
+            }
+        }
+>>>>>>> 23ba571fcd7b43d207680b1f04fe188eba407b1f
         private void button4_Click(object sender, EventArgs e)
         {
             waveOut.Pause();

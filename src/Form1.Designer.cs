@@ -57,8 +57,16 @@
             //this.lstSongs = new KBAudioPlayer.ListViewWithoutScrollBar();
             this.lstSongs = new System.Windows.Forms.ListView();
             this.tabControl1 = new System.Windows.Forms.TabControl();
+<<<<<<< HEAD
+=======
+            this.lstSongs = new System.Windows.Forms.ListView();
+            //this.lstSongs = new KBAudioPlayer.ListViewWithoutScrollBar();
+>>>>>>> 23ba571fcd7b43d207680b1f04fe188eba407b1f
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.picSlider)).BeginInit();
+            this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
+            this.splitContainer1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.SuspendLayout();
@@ -217,7 +225,7 @@
             this.btnDelete.FlatAppearance.BorderSize = 0;
             this.btnDelete.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnDelete.Image = ((System.Drawing.Image)(resources.GetObject("btnDelete.Image")));
-            this.btnDelete.Location = new System.Drawing.Point(148, 409);
+            this.btnDelete.Location = new System.Drawing.Point(148, 0);
             this.btnDelete.Name = "btnDelete";
             this.btnDelete.Size = new System.Drawing.Size(30, 23);
             this.btnDelete.TabIndex = 16;
@@ -254,7 +262,11 @@
             this.btnAdd.FlatAppearance.BorderSize = 0;
             this.btnAdd.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnAdd.Image = global::KBAudioPlayer.Properties.Resources.text_plus_icon;
+<<<<<<< HEAD
             this.btnAdd.Location = new System.Drawing.Point(242, 409);
+=======
+            this.btnAdd.Location = new System.Drawing.Point(242, 0);
+>>>>>>> 23ba571fcd7b43d207680b1f04fe188eba407b1f
             this.btnAdd.Name = "btnAdd";
             this.btnAdd.Size = new System.Drawing.Size(30, 23);
             this.btnAdd.TabIndex = 7;
@@ -290,7 +302,7 @@
             this.btnToBottom.FlatAppearance.BorderSize = 0;
             this.btnToBottom.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnToBottom.Image = global::KBAudioPlayer.Properties.Resources.arrow_stop_270_icon;
-            this.btnToBottom.Location = new System.Drawing.Point(112, 409);
+            this.btnToBottom.Location = new System.Drawing.Point(112, 0);
             this.btnToBottom.Name = "btnToBottom";
             this.btnToBottom.Size = new System.Drawing.Size(30, 23);
             this.btnToBottom.TabIndex = 4;
@@ -302,7 +314,7 @@
             this.btnDown.FlatAppearance.BorderSize = 0;
             this.btnDown.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnDown.Image = global::KBAudioPlayer.Properties.Resources.arrow_skip_270_icon;
-            this.btnDown.Location = new System.Drawing.Point(76, 409);
+            this.btnDown.Location = new System.Drawing.Point(76, 0);
             this.btnDown.Name = "btnDown";
             this.btnDown.Size = new System.Drawing.Size(30, 23);
             this.btnDown.TabIndex = 3;
@@ -314,7 +326,7 @@
             this.btnUp.FlatAppearance.BorderSize = 0;
             this.btnUp.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnUp.Image = global::KBAudioPlayer.Properties.Resources.arrow_skip_090_icon;
-            this.btnUp.Location = new System.Drawing.Point(40, 409);
+            this.btnUp.Location = new System.Drawing.Point(40, 0);
             this.btnUp.Name = "btnUp";
             this.btnUp.Size = new System.Drawing.Size(30, 23);
             this.btnUp.TabIndex = 2;
@@ -326,7 +338,7 @@
             this.btnToTop.FlatAppearance.BorderSize = 0;
             this.btnToTop.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnToTop.Image = global::KBAudioPlayer.Properties.Resources.arrow_stop_090_icon;
-            this.btnToTop.Location = new System.Drawing.Point(4, 409);
+            this.btnToTop.Location = new System.Drawing.Point(4, 0);
             this.btnToTop.Name = "btnToTop";
             this.btnToTop.Size = new System.Drawing.Size(30, 23);
             this.btnToTop.TabIndex = 1;
@@ -360,6 +372,10 @@
             // tabPage1
             // 
             this.tabPage1.Controls.Add(this.lstSongs);
+<<<<<<< HEAD
+=======
+            //this.tabPage1.Controls.Add(this.scrollbar1);
+>>>>>>> 23ba571fcd7b43d207680b1f04fe188eba407b1f
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
@@ -370,6 +386,7 @@
             // 
             // lstSongs
             // 
+<<<<<<< HEAD
             this.lstSongs.Alignment = System.Windows.Forms.ListViewAlignment.Default;
             this.lstSongs.AllowDrop = true;
             this.lstSongs.AutoArrange = false;
@@ -388,6 +405,21 @@
             this.lstSongs.TabIndex = 19;
             this.lstSongs.UseCompatibleStateImageBehavior = false;
             this.lstSongs.View = System.Windows.Forms.View.Details;            
+=======
+            /*
+            this.scrollbar1.ActiveBackColor = System.Drawing.Color.Gray;
+            this.scrollbar1.LargeChange = 10;
+            this.scrollbar1.Location = new System.Drawing.Point(248, -12);
+            this.scrollbar1.Maximum = 99;
+            this.scrollbar1.Minimum = 0;
+            this.scrollbar1.Name = "scrollbar1";
+            this.scrollbar1.Size = new System.Drawing.Size(21, 256);
+            this.scrollbar1.SmallChange = 1;
+            this.scrollbar1.TabIndex = 0;
+            this.scrollbar1.ThumbStyle = Deveck.Ui.Controls.Scrollbar.CustomScrollbar.ThumbStyleEnum.Auto;
+            this.scrollbar1.Value = 0;
+            */
+>>>>>>> 23ba571fcd7b43d207680b1f04fe188eba407b1f
             // 
             // tabControl1
             // 
@@ -399,12 +431,69 @@
             this.tabControl1.Size = new System.Drawing.Size(273, 259);
             this.tabControl1.TabIndex = 22;
             // 
+<<<<<<< HEAD
+=======
+            // lstSongs
+            // 
+            this.lstSongs.Alignment = System.Windows.Forms.ListViewAlignment.Default;
+            this.lstSongs.AllowDrop = true;
+            this.lstSongs.AutoArrange = false;
+            this.lstSongs.BackColor = System.Drawing.SystemColors.InactiveBorder;
+            this.lstSongs.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lstSongs.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F);
+            this.lstSongs.ForeColor = System.Drawing.SystemColors.InactiveCaptionText;
+            this.lstSongs.FullRowSelect = true;
+            this.lstSongs.GridLines = true;
+            this.lstSongs.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
+            this.lstSongs.HideSelection = false;
+            //this.lstSongs.Location = new System.Drawing.Point(3, 3);
+            this.lstSongs.Name = "lstSongs";
+            this.lstSongs.ShowItemToolTips = true;
+            //this.lstSongs.Size = new System.Drawing.Size(239, 227);
+            this.lstSongs.TabIndex = 19;
+            this.lstSongs.UseCompatibleStateImageBehavior = false;
+            this.lstSongs.View = System.Windows.Forms.View.Details;
+            //this.lstSongs.VScrollbar = Ture;
+            // splitContainer1
+            // 
+            this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainer1.Location = new System.Drawing.Point(0, 0);
+            this.splitContainer1.Name = "splitContainer1";
+            this.splitContainer1.Orientation = System.Windows.Forms.Orientation.Horizontal;
+            this.splitContainer1.Size = new System.Drawing.Size(284, 441);
+            this.splitContainer1.SplitterDistance = 400;
+            this.splitContainer1.TabIndex = 0;
+            this.splitContainer1.Panel1.Controls.Add(this.tabControl1);
+            this.splitContainer1.Panel1.Controls.Add(this.speakerButton);
+            this.splitContainer1.Panel1.Controls.Add(this.button7);
+            this.splitContainer1.Panel1.Controls.Add(this.btnNext);
+            this.splitContainer1.Panel1.Controls.Add(this.label3);
+            this.splitContainer1.Panel1.Controls.Add(this.label2);
+            this.splitContainer1.Panel1.Controls.Add(this.pictureBox2);
+            this.splitContainer1.Panel1.Controls.Add(this.picSlider);
+            this.splitContainer1.Panel1.Controls.Add(this.label1);            
+            this.splitContainer1.Panel1.Controls.Add(this.btnStop);
+            this.splitContainer1.Panel1.Controls.Add(this.button1);
+            this.splitContainer1.Panel1.Controls.Add(this.peakMeterCtrl1);
+            this.splitContainer1.Panel1.Controls.Add(this.volumeSlider);
+            //
+            this.splitContainer1.Panel2.Controls.Add(this.btnDelete);
+            this.splitContainer1.Panel2.Controls.Add(this.btnAdd);
+            this.splitContainer1.Panel2.Controls.Add(this.btnToBottom);
+            this.splitContainer1.Panel2.Controls.Add(this.btnDown);
+            this.splitContainer1.Panel2.Controls.Add(this.btnUp);
+            this.splitContainer1.Panel2.Controls.Add(this.btnToTop);
+
+            // 
+>>>>>>> 23ba571fcd7b43d207680b1f04fe188eba407b1f
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(284, 441);
+            this.Controls.Add(this.splitContainer1);
+            /*
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.speakerButton);
             this.Controls.Add(this.button7);
@@ -424,6 +513,7 @@
             this.Controls.Add(this.btnToTop);
             this.Controls.Add(this.peakMeterCtrl1);
             this.Controls.Add(this.volumeSlider);
+            */
             this.MaximizeBox = false;
             this.MaximumSize = new System.Drawing.Size(300, 800);
             this.MinimumSize = new System.Drawing.Size(300, 460);
@@ -464,10 +554,11 @@
         private Tulpep.NotificationWindow.PopupNotifier popupNotifier1;
         private System.Windows.Forms.TabPage tabPage2;
         private System.Windows.Forms.TabPage tabPage1;
+		private System.Windows.Forms.ListView lstSongs;
         //private ListViewWithoutScrollBar lstSongs;
         private System.Windows.Forms.TabControl tabControl1;
-        //private Deveck.Ui.Controls.CustomListView lstSongs;
         private Deveck.Ui.Controls.Scrollbar.CustomScrollbar scrollbar1;
+
         private System.Windows.Forms.ListView lstSongs;
         /*
 private System.Windows.Forms.Panel container1;

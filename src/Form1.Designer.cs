@@ -44,7 +44,7 @@
             this.btnDelete = new System.Windows.Forms.Button();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.picSlider = new System.Windows.Forms.PictureBox();
-            this.button3 = new System.Windows.Forms.Button();
+            this.btnAdd = new System.Windows.Forms.Button();
             this.btnStop = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
             this.btnToBottom = new System.Windows.Forms.Button();
@@ -54,9 +54,9 @@
             this.popupNotifier1 = new Tulpep.NotificationWindow.PopupNotifier();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.scrollbar1 = new Deveck.Ui.Controls.Scrollbar.CustomScrollbar();
+            //this.lstSongs = new KBAudioPlayer.ListViewWithoutScrollBar();
+            this.lstSongs = new System.Windows.Forms.ListView();
             this.tabControl1 = new System.Windows.Forms.TabControl();
-            this.lstSongs = new KBAudioPlayer.ListViewWithoutScrollBar();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.picSlider)).BeginInit();
             this.tabPage1.SuspendLayout();
@@ -249,17 +249,17 @@
             this.picSlider.MouseMove += new System.Windows.Forms.MouseEventHandler(this.picSlider_MouseMove);
             this.picSlider.MouseUp += new System.Windows.Forms.MouseEventHandler(this.picSlider_MouseUp);
             // 
-            // button3
+            // btnAdd
             // 
-            this.button3.FlatAppearance.BorderSize = 0;
-            this.button3.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button3.Image = global::KBAudioPlayer.Properties.Resources.text_plus_icon;
-            this.button3.Location = new System.Drawing.Point(242, 409);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(30, 23);
-            this.button3.TabIndex = 7;
-            this.button3.UseVisualStyleBackColor = true;
-            this.button3.Click += new System.EventHandler(this.button3_Click);
+            this.btnAdd.FlatAppearance.BorderSize = 0;
+            this.btnAdd.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnAdd.Image = global::KBAudioPlayer.Properties.Resources.text_plus_icon;
+            this.btnAdd.Location = new System.Drawing.Point(242, 409);
+            this.btnAdd.Name = "btnAdd";
+            this.btnAdd.Size = new System.Drawing.Size(30, 23);
+            this.btnAdd.TabIndex = 7;
+            this.btnAdd.UseVisualStyleBackColor = true;
+            this.btnAdd.Click += new System.EventHandler(this.btnAdd_Click);
             // 
             // btnStop
             // 
@@ -360,7 +360,6 @@
             // tabPage1
             // 
             this.tabPage1.Controls.Add(this.lstSongs);
-            this.tabPage1.Controls.Add(this.scrollbar1);
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
@@ -369,19 +368,26 @@
             this.tabPage1.Text = "tabPage1";
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
-            // scrollbar1
+            // lstSongs
             // 
-            this.scrollbar1.ActiveBackColor = System.Drawing.Color.Gray;
-            this.scrollbar1.LargeChange = 10;
-            this.scrollbar1.Location = new System.Drawing.Point(248, -12);
-            this.scrollbar1.Maximum = 99;
-            this.scrollbar1.Minimum = 0;
-            this.scrollbar1.Name = "scrollbar1";
-            this.scrollbar1.Size = new System.Drawing.Size(21, 256);
-            this.scrollbar1.SmallChange = 1;
-            this.scrollbar1.TabIndex = 0;
-            this.scrollbar1.ThumbStyle = Deveck.Ui.Controls.Scrollbar.CustomScrollbar.ThumbStyleEnum.Auto;
-            this.scrollbar1.Value = 0;
+            this.lstSongs.Alignment = System.Windows.Forms.ListViewAlignment.Default;
+            this.lstSongs.AllowDrop = true;
+            this.lstSongs.AutoArrange = false;
+            this.lstSongs.BackColor = System.Drawing.SystemColors.InactiveBorder;
+            this.lstSongs.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lstSongs.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F);
+            this.lstSongs.ForeColor = System.Drawing.SystemColors.InactiveCaptionText;
+            this.lstSongs.FullRowSelect = true;
+            this.lstSongs.GridLines = true;
+            this.lstSongs.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
+            this.lstSongs.HideSelection = false;
+            this.lstSongs.Location = new System.Drawing.Point(3, 3);
+            this.lstSongs.Name = "lstSongs";
+            this.lstSongs.ShowItemToolTips = true;
+            this.lstSongs.Size = new System.Drawing.Size(259, 227);
+            this.lstSongs.TabIndex = 19;
+            this.lstSongs.UseCompatibleStateImageBehavior = false;
+            this.lstSongs.View = System.Windows.Forms.View.Details;            
             // 
             // tabControl1
             // 
@@ -392,29 +398,6 @@
             this.tabControl1.SelectedIndex = 0;
             this.tabControl1.Size = new System.Drawing.Size(273, 259);
             this.tabControl1.TabIndex = 22;
-            // 
-            // lstSongs
-            // 
-            this.lstSongs.Alignment = System.Windows.Forms.ListViewAlignment.Default;
-            this.lstSongs.AllowDrop = true;
-            this.lstSongs.AutoArrange = false;
-            this.lstSongs.BackColor = System.Drawing.SystemColors.InactiveBorder;
-            this.lstSongs.Dock = System.Windows.Forms.DockStyle.Left;
-            this.lstSongs.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F);
-            this.lstSongs.ForeColor = System.Drawing.SystemColors.InactiveCaptionText;
-            this.lstSongs.FullRowSelect = true;
-            this.lstSongs.GridLines = true;
-            this.lstSongs.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
-            this.lstSongs.HideSelection = false;
-            this.lstSongs.Location = new System.Drawing.Point(3, 3);
-            this.lstSongs.Name = "lstSongs";
-            this.lstSongs.ShowItemToolTips = true;
-            this.lstSongs.Size = new System.Drawing.Size(239, 227);
-            this.lstSongs.TabIndex = 19;
-            this.lstSongs.UseCompatibleStateImageBehavior = false;
-            this.lstSongs.View = System.Windows.Forms.View.Details;
-            this.lstSongs.VScrollbar = null;
-            
             // 
             // Form1
             // 
@@ -432,7 +415,7 @@
             this.Controls.Add(this.pictureBox2);
             this.Controls.Add(this.picSlider);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.button3);
+            this.Controls.Add(this.btnAdd);
             this.Controls.Add(this.btnStop);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.btnToBottom);
@@ -463,7 +446,7 @@
         private System.Windows.Forms.Button btnToBottom;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button btnStop;
-        private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.Button btnAdd;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.OpenFileDialog openFileDialog;
         private System.Windows.Forms.Timer timer1;
@@ -481,11 +464,17 @@
         private Tulpep.NotificationWindow.PopupNotifier popupNotifier1;
         private System.Windows.Forms.TabPage tabPage2;
         private System.Windows.Forms.TabPage tabPage1;
-        //private System.Windows.Forms.ListView lstSongs;
-        private ListViewWithoutScrollBar lstSongs;
+        //private ListViewWithoutScrollBar lstSongs;
         private System.Windows.Forms.TabControl tabControl1;
         //private Deveck.Ui.Controls.CustomListView lstSongs;
         private Deveck.Ui.Controls.Scrollbar.CustomScrollbar scrollbar1;
+        private System.Windows.Forms.ListView lstSongs;
+        /*
+private System.Windows.Forms.Panel container1;
+private System.Windows.Forms.Panel panel1;
+private System.Windows.Forms.Panel panel2;
+*/
+
     }
 }
 

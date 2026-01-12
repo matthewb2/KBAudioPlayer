@@ -54,13 +54,13 @@ namespace KBAudioPlayer
             }
             return -1;
         }
-		
+        
         void UpdatePlaylist()
         {
-			//MessageBox.Show(playlist.Count.ToString());
+            //MessageBox.Show(playlist.Count.ToString());
             lstSongs.Items.Clear();
             List<ListViewItem> items = new List<ListViewItem>();
-
+            
             for (int i = 0; i < playlist.Count; i++)
             {
                 string result = Path.GetFileName(playlist[i]);
@@ -71,18 +71,27 @@ namespace KBAudioPlayer
                 {
                     TagLib.File f = TagLib.File.Create(playlist[i], TagLib.ReadStyle.Average);
                     System.TimeSpan duration = f.Properties.Duration;
-                    string songlength = duration.ToString("mm':'ss");
+                    // 길이가 1시간이 넘을 때 처리
+                    string songlength;
+                    if (duration.TotalHours >= 1)
+                    {
+                        songlength = duration.ToString(@"h\:mm\:ss");
+                    }
+                    else
+                    {
+                        songlength = duration.ToString(@"mm\:ss");
+                    }
                     //string[] item = { (i + 1).ToString(), result, songlength };
                     //lstSongs.Items.Add(new ListViewItem(item));
-                    ListViewItem item = new ListViewItem((i+1).ToString());
+                    ListViewItem item = new ListViewItem((i + 1).ToString());
                     //item.SubItems.Add((i + 1).ToString());
-                    item.SubItems.Add(result); 
+                    item.SubItems.Add(result);
                     item.SubItems.Add(songlength);
                     items.Add(item);
                 }
                 else
                 {
-					/*
+                    /*
                     string[] item = { (i + 1).ToString(), "!" + result, "" };
                     ListViewItem tmp = new ListViewItem(item);
                     tmp.ToolTipText = "파일이 이동되었거나 삭제되었습니다";
@@ -92,11 +101,7 @@ namespace KBAudioPlayer
 
                 }
             }
-            /*
-            ImageList imgList = new ImageList();
-            imgList.ImageSize = new Size(1, lstSongs.Font.Height + 2);
-            lstSongs.SmallImageList = imgList;
-            */
+            
             lstSongs.Items.AddRange(items.ToArray());
 
 
@@ -105,25 +110,9 @@ namespace KBAudioPlayer
             {
                 if (_playback.IsPlaying()) _playback.Stop();
             }
-			/*
-            File.WriteAllText(path + @"\playlist.dat", string.Empty);
-            FileStream fs = File.Open(path + @"\playlist.dat", FileMode.Open);
-            //write again
-            StreamWriter writer = new StreamWriter(fs, Encoding.UTF8);
-            {
-                foreach (string tmp in playlist)
-                {
-                    writer.WriteLine(tmp);
-                }
-
-            }
-            writer.Dispose();
-            writer.Close();
-            WriteXML();
-			*/
         }
-
-        private void SavePlayList()
+		
+		private void SavePlayList()
         {
             File.WriteAllText(path + @"\playlist.dat", string.Empty);
             FileStream fs = File.Open(path + @"\playlist.dat", FileMode.Open);

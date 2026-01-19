@@ -1,27 +1,27 @@
-﻿using NAudio.Wave;
+﻿using CSCore;
+using CSCore.Codecs;
+using CSCore.SoundOut;
+using Deveck.Ui.Controls.Scrollbar;
+using NAudio.Wave;
+using NAudio.Wave.SampleProviders;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
+using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Runtime.InteropServices;
-using System.Diagnostics;
-using System.Xml.Serialization;
 using System.Xml;
-using NAudio.Wave.SampleProviders;
-using System.Globalization;
-using CSCore;
-using CSCore.SoundOut;
-using CSCore.Codecs;
-using Deveck.Ui.Controls.Scrollbar;
-using Newtonsoft.Json;
+using System.Xml.Serialization;
 
 
 
@@ -469,7 +469,8 @@ namespace KBAudioPlayer
         {
             var item = lstSongs.SelectedItems[0];
             item_current = item.SubItems[1].Text;
-            int index = getIndexFromSelect(item_current);
+            int index = lstSongs.SelectedItems[0].Index;
+
 
             string[] items = { };
             if (index > 0)
@@ -486,9 +487,11 @@ namespace KBAudioPlayer
         private void btnDown_Click(object sender, EventArgs e)
         {
             var item = lstSongs.SelectedItems[0];
+            // item 의 순번을 구함
+            //item.Index 0부터 시작
             item_current = item.SubItems[1].Text;
-            int index = getIndexFromSelect(item_current);
-            if (index < lstSongs.Items.Count - 1)
+            int index = lstSongs.SelectedItems[0].Index;
+            if (index < lstSongs.Items.Count - 1 && index != -1)
             {
                 string tmp = playlist[index];
                 playlist.RemoveAt(index);
@@ -779,22 +782,15 @@ namespace KBAudioPlayer
         {
             if (lstSongs.SelectedIndices.Count > 0)
             {
-
-                //
-                var item = lstSongs.SelectedItems[0];
-                
-                item_current = item.SubItems[1].Text;
-                //Console.WriteLine(item_current);
+                var item = lstSongs.SelectedItems[0];                
+                item_current = item.SubItems[1].Text;                
                 int index = getPlayIndex(item_current);
-                //Console.WriteLine(index);
                 if (index != -1)
-                {
-                    
+                {                    
                     lstSongs.BeginUpdate();
-                    lstSongs.Items.RemoveAt(index);
-                    //lstSongs.Items.Add(new ListViewItem("새 아이템"));
-                    
-
+                        MessageBox.Show(index.ToString());
+                        lstSongs.Items.RemoveAt(index);
+                        //lstSongs.Items.Add(new ListViewItem("새 아이템"));
                     lstSongs.EndUpdate();
                     playlist.RemoveAt(index);
                 }

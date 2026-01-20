@@ -335,6 +335,7 @@ namespace KBAudioPlayer
 
             int index2;
             string cur;
+            /*
             if (tabControl1.SelectedIndex == 1)
             {
                 index2 = newlstSongs.SelectedIndices[0];
@@ -342,11 +343,13 @@ namespace KBAudioPlayer
             }
             else
             {
+                
                 index2 = lstSongs.SelectedIndices[0];
                 cur = playlist[index2];
+                
             }
-            
-            cur = Path.GetFileName(cur);
+            */
+            cur = Path.GetFileName(item_current);
             FileInfo fi = new FileInfo(cur);
 			
             if (fi.Extension == ".flac")
@@ -788,7 +791,7 @@ namespace KBAudioPlayer
                 if (index != -1)
                 {                    
                     lstSongs.BeginUpdate();
-                        MessageBox.Show(index.ToString());
+                        //MessageBox.Show(index.ToString());
                         lstSongs.Items.RemoveAt(index);
                         //lstSongs.Items.Add(new ListViewItem("새 아이템"));
                     lstSongs.EndUpdate();

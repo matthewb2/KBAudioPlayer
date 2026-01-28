@@ -785,23 +785,18 @@ namespace KBAudioPlayer
         {
             if (lstSongs.SelectedIndices.Count > 0)
             {
-                var item = lstSongs.SelectedItems[0];                
-                item_current = item.SubItems[1].Text;                
-                int index = getPlayIndex(item_current);
+                var index = lstSongs.SelectedItems[0].Index;                
+                
+                //MessageBox.Show(index.ToString());
                 if (index != -1)
-                {                    
+                {
                     lstSongs.BeginUpdate();
-                        //MessageBox.Show(index.ToString());
                         lstSongs.Items.RemoveAt(index);
-                        //lstSongs.Items.Add(new ListViewItem("새 아이템"));
                     lstSongs.EndUpdate();
                     playlist.RemoveAt(index);
                 }
                 //
                 //UpdatePlaylist();
-                //lstSongs.Items[index].Selected = true;
-                //lstSongs.Items[index].Focused = true;
-                //lstSongs.Items[index].EnsureVisible();
                 //save list
                 SavePlayList();
             }
